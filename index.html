@@ -421,16 +421,32 @@
         const DASHBOARD_DATA = {
             lastUpdated: new Date().toISOString(),
             botStatus: "idle",
-            contentQueue: [],
+            contentQueue: [
+                {
+                    id: 1,
+                    type: "resource",
+                    title: "Penpot — Open Source Design Tool",
+                    channel: "Resources",
+                    status: "draft",
+                    date: new Date().toISOString().split('T')[0],
+                    preview: "🔧 **Penpot** Free, open-source alternative to Figma with real-time collaboration, prototyping, and design-to-code capabilities. Perfect for design teams working alongside developers.\n\n🔗 https://penpot.app"
+                }
+            ],
             activityLog: [
                 {
                     time: new Date().toISOString(),
+                    action: "Resource draft generated: Penpot — Open Source Design Tool",
+                    channel: "—",
+                    status: "success"
+                },
+                {
+                    time: new Date(Date.now() - 10000).toISOString(),
                     action: "Resource automation configured — MWF 10am schedule",
                     channel: "—",
                     status: "success"
                 },
                 {
-                    time: new Date(Date.now() - 60000).toISOString(),
+                    time: new Date(Date.now() - 70000).toISOString(),
                     action: "Dashboard deployed — Design Jutsu Command Center is live",
                     channel: "—",
                     status: "success"
