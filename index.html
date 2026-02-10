@@ -723,9 +723,36 @@
     <!-- Data Structure -->
     <script>
         const DASHBOARD_DATA = {
-            lastUpdated: new Date().toISOString(),
+            lastUpdated: "2026-02-10T16:49:00.000Z",
             botStatus: "idle",
             contentQueue: [
+                {
+                    id: 5,
+                    type: "resource",
+                    title: "Inter Font — Typeface for Computer Screens",
+                    channel: "Resources",
+                    status: "draft",
+                    date: "2026-02-10",
+                    preview: "🔧 Inter\n📂 Type: Free Font\n💰 Pricing: Free\n💻 Platform: Web\n\nWhat it does: Open-source sans-serif typeface designed specifically for screen use. Metrically compatible with Helvetica, perfect for UIs with great readability at all sizes.\n\nBest for:\n→ App and web UI typography\n→ Accessible interface design\n\n🔗 https://rsms.me/inter/"
+                },
+                {
+                    id: 4,
+                    type: "resource",
+                    title: "Accessibility Insights — Web Accessibility Testing",
+                    channel: "Resources",
+                    status: "draft",
+                    date: "2026-02-10",
+                    preview: "🔧 Accessibility Insights\n📂 Type: Accessibility Tool\n💰 Pricing: Free\n💻 Platform: Browser Extension\n\nWhat it does: Free browser extension that scans web pages for accessibility issues. Powered by Microsoft — gives actionable guidance on WCAG compliance.\n\nBest for:\n→ Testing designs for accessibility\n→ Learning WCAG standards\n\n🔗 https://accessibilityinsights.io/"
+                },
+                {
+                    id: 3,
+                    type: "resource",
+                    title: "Elytra — Free UI Component Kit",
+                    channel: "Resources",
+                    status: "draft",
+                    date: "2026-02-10",
+                    preview: "🔧 Elytra\n📂 Type: UI Kit\n💰 Pricing: Free\n💻 Platform: Figma\n\nWhat it does: Open-source design system with production-ready components. Fully customizable, accessible, and ready to hand off to developers.\n\nBest for:\n→ Speeding up component design\n→ Learning design system best practices\n\n🔗 https://www.elytra.design/"
+                },
                 {
                     id: 2,
                     type: "resource",
@@ -742,7 +769,7 @@
                     channel: "Resources",
                     status: "draft",
                     date: "2026-02-10",
-                    preview: "🔧 **Penpot**\n\nFree, open-source alternative to Figma with real-time collaboration, prototyping, and design-to-code capabilities. Perfect for design teams working alongside developers.\n\n🔗 https://penpot.app"
+                    preview: "🔧 Penpot\n📂 Type: Design Platform\n💰 Pricing: Free\n💻 Platform: Web\n\nWhat it does: Free, open-source alternative to Figma with real-time collaboration, prototyping, and design-to-code capabilities. Perfect for design teams working alongside developers.\n\nBest for:\n→ Team collaboration on design files\n→ Open-source design workflow\n\n🔗 https://penpot.app"
                 }
             ],
             roshiWeekly: [
@@ -791,42 +818,70 @@
             ],
             activityLog: [
                 {
-                    time: new Date().toISOString(),
+                    time: "2026-02-10T16:49:00.000Z",
+                    action: "Initial content batch generated: 5 resources, 3 discussions, 3 general chat, 2 tools",
+                    channel: "—",
+                    status: "success",
+                    details: "Community seed content ready for approval. Resources in dashboard queue. Discussions, chat, and tools scheduled for auto-post across the week."
+                },
+                {
+                    time: "2026-02-10T16:48:55.000Z",
+                    action: "Roshi Resources draft: Accessibility Insights",
+                    channel: "Resources",
+                    status: "success",
+                    details: "Free web accessibility testing tool. Awaiting approval."
+                },
+                {
+                    time: "2026-02-10T16:48:50.000Z",
+                    action: "Roshi Resources draft: Elytra UI Kit",
+                    channel: "Resources",
+                    status: "success",
+                    details: "Open-source design system with production-ready components. Awaiting approval."
+                },
+                {
+                    time: "2026-02-10T16:48:45.000Z",
+                    action: "Roshi Resources draft: Inter Font",
+                    channel: "Resources",
+                    status: "success",
+                    details: "Free, open-source typeface designed for screens. Awaiting approval."
+                },
+                {
+                    time: "2026-02-10T16:48:40.000Z",
                     action: "Roshi posted to General Chat",
                     channel: "General Chat",
                     status: "success",
                     details: "Just noticed more apps ditching skip buttons on onboarding. Turns out friction ≠ commitment. People just leave. What's your approach — frictionless or earn the time? 🤔"
                 },
                 {
-                    time: new Date(Date.now() - 5000).toISOString(),
-                    action: "Roshi Resources draft generated: Figma to Code",
+                    time: "2026-02-10T16:48:30.000Z",
+                    action: "Roshi Resources draft: Figma to Code",
                     channel: "Resources",
                     status: "success",
-                    details: "Monday Resource: Auto-generates clean code from Figma designs. Awaiting approval for posting."
+                    details: "Developer tool for design-to-code automation. Awaiting approval."
                 },
                 {
-                    time: new Date(Date.now() - 60000).toISOString(),
+                    time: "2026-02-10T16:48:00.000Z",
                     action: "Roshi daily engagement batch run (Monday)",
                     channel: "—",
                     status: "success",
                     details: "Generated 2 posts: 1 Resources draft (approval pipeline) + 1 General Chat auto-post."
                 },
                 {
-                    time: new Date(Date.now() - 150000).toISOString(),
+                    time: "2026-02-10T16:47:30.000Z",
                     action: "Resource draft generated: Penpot — Open Source Design Tool",
                     channel: "—",
                     status: "success",
                     details: "Generated draft for Penpot design tool. Awaiting approval."
                 },
                 {
-                    time: new Date(Date.now() - 200000).toISOString(),
+                    time: "2026-02-10T16:47:00.000Z",
                     action: "Resource automation configured — MWF 10am schedule",
                     channel: "—",
                     status: "success",
                     details: "Scheduled automated resource posting for Monday, Wednesday, Friday at 10:00 UTC."
                 },
                 {
-                    time: new Date(Date.now() - 260000).toISOString(),
+                    time: "2026-02-10T16:46:00.000Z",
                     action: "Dashboard deployed — Design Jutsu Command Center is live",
                     channel: "—",
                     status: "success",
