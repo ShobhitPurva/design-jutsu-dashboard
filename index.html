@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Jutsu — Command Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --border: #2a2a2a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #707070;
+            --accent: #d4af37;
+            --accent-dim: #8b7731;
+            --success: #2dd4bf;
+            --warning: #fbbf24;
+            --error: #ef4444;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            letter-spacing: -0.02em;
+        }
+
+        .dojo-accent {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+        }
+
+        .bot-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .last-updated {
+            color: var(--text-secondary);
+        }
+
+        /* Main Layout */
+        .main {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Community Pulse Cards */
+        .pulse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .pulse-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .pulse-card:hover {
+            border-color: var(--accent-dim);
+        }
+
+        .pulse-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .pulse-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--accent);
+        }
+
+        /* Main Panels Grid */
+        .panels-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-tertiary);
+        }
+
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+        }
+
+        .panel-body {
+            padding: 1.5rem;
+        }
+
+        /* Content Queue Table */
+        .queue-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .queue-table th {
+            text-align: left;
+            padding: 0.75rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            font-weight: 500;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .queue-table td {
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .queue-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .empty-state {
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-tertiary);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .empty-state-text {
+            font-size: 0.875rem;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            font-family: var(--font-mono);
+        }
+
+        .status-draft { background: var(--bg-tertiary); color: var(--text-secondary); }
+        .status-approved { background: rgba(45, 212, 191, 0.15); color: var(--success); }
+        .status-posted { background: rgba(212, 175, 55, 0.15); color: var(--accent); }
+
+        /* Automation List */
+        .automation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .automation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .automation-name {
+            font-weight: 500;
+        }
+
+        .automation-status {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            font-family: var(--font-mono);
+        }
+
+        .automation-toggle {
+            width: 40px;
+            height: 20px;
+            border-radius: 10px;
+            background: var(--border);
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .automation-toggle.active {
+            background: var(--accent-dim);
+        }
+
+        .automation-toggle::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .automation-toggle.active::after {
+            transform: translateX(20px);
+        }
+
+        /* Activity Log */
+        .activity-log {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-log::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .activity-log::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+
+        .activity-log::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .log-item {
+            display: grid;
+            grid-template-columns: 140px 1fr 200px 100px;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+
+        .log-item:last-child {
+            border-bottom: none;
+        }
+
+        .log-time {
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+        }
+
+        .log-action {
+            color: var(--text-primary);
+        }
+
+        .log-channel {
+            color: var(--text-secondary);
+        }
+
+        .log-status {
+            font-family: var(--font-mono);
+            font-weight: 500;
+        }
+
+        .log-status.success { color: var(--success); }
+        .log-status.warning { color: var(--warning); }
+        .log-status.error { color: var(--error); }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Belt Distribution */
+        .belt-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .belt-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .belt-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .belt-white { background: #ffffff; }
+        .belt-yellow { background: #fbbf24; }
+        .belt-orange { background: #fb923c; }
+        .belt-green { background: #4ade80; }
+        .belt-blue { background: #60a5fa; }
+        .belt-brown { background: #92400e; }
+        .belt-black { background: #000000; border: 1px solid var(--border); }
+
+        .belt-label {
+            flex: 1;
+            font-size: 0.875rem;
+        }
+
+        .belt-count {
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .belt-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .belt-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        /* Top Contributors */
+        .contributor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .contributor-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .contributor-name {
+            font-weight: 500;
+        }
+
+        .contributor-xp {
+            color: var(--accent);
+            font-family: var(--font-mono);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+        }
+
+        .footer-main {
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-accent {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .panels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .log-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .pulse-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Data Structure -->
+    <script>
+        const DASHBOARD_DATA = {
+            lastUpdated: new Date().toISOString(),
+            communityPulse: {
+                members: null,
+                activeWeek: null,
+                newJoins: null,
+                pendingSubmissions: null
+            },
+            contentQueue: [],
+            automations: {
+                resourcePosting: { name: "Resource Posting", schedule: "Daily", status: "not_configured" },
+                discussionTopics: { name: "Discussion Topics", schedule: "2x/week", status: "not_configured" },
+                bountyGeneration: { name: "Bounty Generation", schedule: "Weekly", status: "not_configured" },
+                submissionReminders: { name: "Submission Reminders", schedule: "Auto", status: "not_configured" },
+                communityReport: { name: "Community Report", schedule: "Weekly", status: "not_configured" },
+                memberMonitoring: { name: "Member Monitoring", schedule: "Daily", status: "not_configured" }
+            },
+            activityLog: [],
+            beltDistribution: {},
+            topContributors: []
+        };
+    </script>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <h1>Design Jutsu <span class="dojo-accent">— Command Center</span></h1>
+            </div>
+            <div class="header-meta">
+                <div class="bot-status">
+                    <div class="status-indicator"></div>
+                    <span>Bot Active</span>
+                </div>
+                <div class="last-updated" id="lastUpdated">
+                    Updated: —
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main">
+            <div class="main-content">
+                <!-- Community Pulse -->
+                <section>
+                    <div class="pulse-grid">
+                        <div class="pulse-card">
+                            <div class="pulse-label">Total Members</div>
+                            <div class="pulse-value" id="totalMembers">—</div>
+                        </div>
+                        <div class="pulse-card">
+                            <div class="pulse-label">Active This Week</div>
+                            <div class="pulse-value" id="activeWeek">—</div>
+                        </div>
+                        <div class="pulse-card">
+                            <div class="pulse-label">New Joins This Week</div>
+                            <div class="pulse-value" id="newJoins">—</div>
+                        </div>
+                        <div class="pulse-card">
+                            <div class="pulse-label">Pending Submissions</div>
+                            <div class="pulse-value" id="pendingSubmissions">—</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Main Panels -->
+                <div class="panels-grid">
+                    <!-- Content Queue -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title">Content Queue</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div id="contentQueue">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">📋</div>
+                                    <div class="empty-state-text">No items in queue</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Automation Status -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title">Automation Status</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="automation-list" id="automationList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Log -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Activity Log</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="activity-log" id="activityLog">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📊</div>
+                                <div class="empty-state-text">No activity yet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Belt Distribution -->
+                <div class="sidebar-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Belt Distribution</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="belt-chart">
+                            <div class="belt-item">
+                                <div class="belt-color belt-white"></div>
+                                <div class="belt-label">White</div>
+                                <div class="belt-count">—</div>
+                            </div>
+                            <div class="belt-item">
+                                <div class="belt-color belt-yellow"></div>
+                                <div class="belt-label">Yellow</div>
+                                <div class="belt-count">—</div>
+                            </div>
+                            <div class="belt-item">
+                                <div class="belt-color belt-orange"></div>
+                                <div class="belt-label">Orange</div>
+                                <div class="belt-count">—</div>
+                            </div>
+                            <div class="belt-item">
+                                <div class="belt-color belt-green"></div>
+                                <div class="belt-label">Green</div>
+                                <div class="belt-count">—</div>
+                            </div>
+                            <div class="belt-item">
+                                <div class="belt-color belt-blue"></div>
+                                <div class="belt-label">Blue</div>
+                                <div class="belt-count">—</div>
+                            </div>
+                            <div class="belt-item">
+                                <div class="belt-color belt-brown"></div>
+                                <div class="belt-label">Brown</div>
+                                <div class="belt-count">—</div>
+                            </div>
+                            <div class="belt-item">
+                                <div class="belt-color belt-black"></div>
+                                <div class="belt-label">Black</div>
+                                <div class="belt-count">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Contributors -->
+                <div class="sidebar-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Top Contributors</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div id="topContributors">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">🏆</div>
+                                <div class="empty-state-text">No data yet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bounty Completion Rate -->
+                <div class="sidebar-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Bounty Completion</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="empty-state">
+                            <div class="pulse-value" style="font-size: 3rem;">—</div>
+                            <div class="empty-state-text">Completion rate</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-main">Powered by <span class="footer-accent">OpenClaw × Haiku</span></div>
+        <div>Dashboard auto-updates when bot pushes changes</div>
+    </footer>
+
+    <!-- Render Logic -->
+    <script>
+        function formatTimestamp(isoString) {
+            if (!isoString) return '—';
+            const date = new Date(isoString);
+            return date.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function renderDashboard() {
+            // Last Updated
+            document.getElementById('lastUpdated').textContent = 
+                `Updated: ${formatTimestamp(DASHBOARD_DATA.lastUpdated)}`;
+
+            // Community Pulse
+            const pulse = DASHBOARD_DATA.communityPulse;
+            document.getElementById('totalMembers').textContent = pulse.members ?? '—';
+            document.getElementById('activeWeek').textContent = pulse.activeWeek ?? '—';
+            document.getElementById('newJoins').textContent = pulse.newJoins ?? '—';
+            document.getElementById('pendingSubmissions').textContent = pulse.pendingSubmissions ?? '—';
+
+            // Content Queue
+            const queueContainer = document.getElementById('contentQueue');
+            if (DASHBOARD_DATA.contentQueue.length === 0) {
+                queueContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <div class="empty-state-text">No items in queue</div>
+                    </div>
+                `;
+            } else {
+                // Render table when data is available
+                queueContainer.innerHTML = `
+                    <table class="queue-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Title</th>
+                                <th>Channel</th>
+                                <th>Status</th>
+                                <th>Scheduled</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${DASHBOARD_DATA.contentQueue.map(item => `
+                                <tr>
+                                    <td>${item.type}</td>
+                                    <td>${item.title}</td>
+                                    <td>${item.channel}</td>
+                                    <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span></td>
+                                    <td>${formatTimestamp(item.scheduled)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+
+            // Automations
+            const automationList = document.getElementById('automationList');
+            automationList.innerHTML = Object.values(DASHBOARD_DATA.automations).map(auto => `
+                <div class="automation-item">
+                    <div>
+                        <div class="automation-name">${auto.name}</div>
+                        <div class="automation-status">${auto.schedule} • Not configured</div>
+                    </div>
+                    <div class="automation-toggle ${auto.status === 'active' ? 'active' : ''}"></div>
+                </div>
+            `).join('');
+
+            // Activity Log
+            const logContainer = document.getElementById('activityLog');
+            if (DASHBOARD_DATA.activityLog.length === 0) {
+                logContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📊</div>
+                        <div class="empty-state-text">No activity yet</div>
+                    </div>
+                `;
+            } else {
+                logContainer.innerHTML = DASHBOARD_DATA.activityLog.map(log => `
+                    <div class="log-item">
+                        <div class="log-time">${formatTimestamp(log.time)}</div>
+                        <div class="log-action">${log.action}</div>
+                        <div class="log-channel">${log.channel}</div>
+                        <div class="log-status ${log.status}">${log.status.toUpperCase()}</div>
+                    </div>
+                `).join('');
+            }
+
+            // Top Contributors
+            const contributorsContainer = document.getElementById('topContributors');
+            if (DASHBOARD_DATA.topContributors.length === 0) {
+                contributorsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🏆</div>
+                        <div class="empty-state-text">No data yet</div>
+                    </div>
+                `;
+            } else {
+                contributorsContainer.innerHTML = `
+                    <div class="contributor-list">
+                        ${DASHBOARD_DATA.topContributors.map(contrib => `
+                            <div class="contributor-item">
+                                <span class="contributor-name">${contrib.name}</span>
+                                <span class="contributor-xp">${contrib.xp} XP</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        // Initial render
+        renderDashboard();
+
+        // Auto-refresh every 30 seconds
+        setInterval(renderDashboard, 30000);
+    </script>
+</body>
+</html>
