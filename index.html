@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Design Jutsu — Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,89 +18,156 @@
             --bg-primary: #0a0a0a;
             --bg-secondary: #141414;
             --bg-tertiary: #1a1a1a;
-            --bg-card: #1e1e1e;
-            --border: #2a2a2a;
-            --text-primary: #e8e8e8;
-            --text-secondary: #a0a0a0;
-            --text-tertiary: #707070;
-            --accent: #d4af37;
-            --accent-dim: #8b7731;
+            --crimson: #A31621;
+            --crimson-dark: #8B0000;
+            --crimson-dim: #5a0d12;
+            --text-primary: #f0e6e6;
+            --text-secondary: #a89f9f;
+            --text-tertiary: #6b6464;
             --success: #2dd4bf;
-            --warning: #fbbf24;
-            --error: #ef4444;
-            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --warning: #f59e0b;
+            --error: #dc2626;
+            --border: #2a2424;
         }
 
         body {
-            font-family: var(--font-sans);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.02) 2px, rgba(255,255,255,.02) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,.02) 2px, rgba(255,255,255,.02) 4px);
             color: var(--text-primary);
             line-height: 1.6;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 1920px;
-            margin: 0 auto;
-            padding: 0;
+        /* Password Gate */
+        .password-gate {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .password-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 3rem 2.5rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .password-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--crimson);
+        }
+
+        .password-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--crimson);
+        }
+
+        .password-submit {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--crimson);
+            border: none;
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .password-submit:hover {
+            background: var(--crimson-dark);
+        }
+
+        .password-error {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .password-error.show {
+            display: block;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.unlocked {
+            display: block;
         }
 
         /* Header */
         .header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
-            padding: 1.5rem 2rem;
+            padding: 1.25rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
         }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1920px;
-            margin: 0 auto;
-        }
-
         .header-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .header-title h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            font-family: var(--font-mono);
-            letter-spacing: -0.02em;
-        }
-
-        .dojo-accent {
-            color: var(--accent);
+            font-size: 1.25rem;
             font-weight: 700;
+            color: var(--crimson);
         }
 
-        .header-meta {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            font-family: var(--font-mono);
+        .header-center {
+            color: var(--text-secondary);
             font-size: 0.875rem;
         }
 
-        .bot-status {
+        .header-right {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .status-indicator {
+        .bot-status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
+            background: var(--text-tertiary);
+        }
+
+        .bot-status-dot.active {
             background: var(--success);
             animation: pulse 2s ease-in-out infinite;
         }
@@ -107,93 +177,48 @@
             50% { opacity: 0.5; }
         }
 
-        .last-updated {
+        .bot-status-label {
             color: var(--text-secondary);
-        }
-
-        /* Main Layout */
-        .main {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 2rem;
-            max-width: 1920px;
-            margin: 0 auto;
-        }
-
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        /* Community Pulse Cards */
-        .pulse-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-        }
-
-        .pulse-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: border-color 0.2s;
-        }
-
-        .pulse-card:hover {
-            border-color: var(--accent-dim);
-        }
-
-        .pulse-label {
             font-size: 0.875rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
         }
 
-        .pulse-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            font-family: var(--font-mono);
-            color: var(--accent);
+        /* Main Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        /* Main Panels Grid */
-        .panels-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
-
-        .panel {
-            background: var(--bg-card);
+        /* Section */
+        .section {
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 8px;
+            margin-bottom: 2rem;
             overflow: hidden;
         }
 
-        .panel-header {
+        .section-header {
             padding: 1.25rem 1.5rem;
             border-bottom: 1px solid var(--border);
-            background: var(--bg-tertiary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .panel-title {
+        .section-title {
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--accent);
+            color: var(--crimson);
         }
 
-        .panel-body {
+        .section-body {
             padding: 1.5rem;
         }
 
-        /* Content Queue Table */
+        /* Content Queue */
         .queue-table {
             width: 100%;
             border-collapse: collapse;
@@ -201,27 +226,163 @@
 
         .queue-table th {
             text-align: left;
-            padding: 0.75rem;
+            padding: 0.75rem 1rem;
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-secondary);
-            font-weight: 500;
+            font-weight: 600;
             border-bottom: 1px solid var(--border);
         }
 
-        .queue-table td {
-            padding: 1rem 0.75rem;
+        .queue-row {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .queue-row:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .queue-row td {
+            padding: 1rem;
             border-bottom: 1px solid var(--border);
         }
 
-        .queue-table tr:last-child td {
+        .queue-row.expanded {
+            background: var(--bg-tertiary);
+        }
+
+        .queue-preview {
+            display: none;
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .queue-preview.show {
+            display: block;
+        }
+
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-draft { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .status-approved { background: rgba(45, 212, 191, 0.15); color: var(--success); }
+        .status-posted { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .status-rejected { background: rgba(220, 38, 38, 0.15); color: var(--error); }
+
+        /* Activity Log */
+        .activity-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--crimson-dim);
+        }
+
+        .filter-btn.active {
+            background: var(--crimson-dim);
+            border-color: var(--crimson);
+            color: var(--text-primary);
+        }
+
+        .activity-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .activity-list::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+
+        .activity-list::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .activity-item {
+            display: grid;
+            grid-template-columns: 140px 1fr 180px 20px;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+            align-items: center;
+        }
+
+        .activity-item:last-child {
             border-bottom: none;
         }
 
+        .activity-item.hidden {
+            display: none;
+        }
+
+        .activity-time {
+            color: var(--text-tertiary);
+        }
+
+        .activity-action {
+            color: var(--text-primary);
+        }
+
+        .activity-channel {
+            color: var(--text-secondary);
+        }
+
+        .activity-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .activity-status-dot.success { background: var(--success); }
+        .activity-status-dot.warning { background: var(--warning); }
+        .activity-status-dot.error { background: var(--error); }
+
+        /* Empty States */
         .empty-state {
-            padding: 3rem;
             text-align: center;
+            padding: 4rem 2rem;
             color: var(--text-tertiary);
         }
 
@@ -235,271 +396,21 @@
             font-size: 0.875rem;
         }
 
-        /* Status Badge */
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            font-family: var(--font-mono);
-        }
-
-        .status-draft { background: var(--bg-tertiary); color: var(--text-secondary); }
-        .status-approved { background: rgba(45, 212, 191, 0.15); color: var(--success); }
-        .status-posted { background: rgba(212, 175, 55, 0.15); color: var(--accent); }
-
-        /* Automation List */
-        .automation-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .automation-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: var(--bg-tertiary);
-            border-radius: 6px;
-            border: 1px solid var(--border);
-        }
-
-        .automation-name {
-            font-weight: 500;
-        }
-
-        .automation-status {
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            font-family: var(--font-mono);
-        }
-
-        .automation-toggle {
-            width: 40px;
-            height: 20px;
-            border-radius: 10px;
-            background: var(--border);
-            position: relative;
-            transition: background 0.3s;
-        }
-
-        .automation-toggle.active {
-            background: var(--accent-dim);
-        }
-
-        .automation-toggle::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--text-primary);
-            top: 2px;
-            left: 2px;
-            transition: transform 0.3s;
-        }
-
-        .automation-toggle.active::after {
-            transform: translateX(20px);
-        }
-
-        /* Activity Log */
-        .activity-log {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .activity-log::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .activity-log::-webkit-scrollbar-track {
-            background: var(--bg-tertiary);
-        }
-
-        .activity-log::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
-        }
-
-        .log-item {
-            display: grid;
-            grid-template-columns: 140px 1fr 200px 100px;
-            gap: 1rem;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.875rem;
-        }
-
-        .log-item:last-child {
-            border-bottom: none;
-        }
-
-        .log-time {
-            font-family: var(--font-mono);
-            color: var(--text-secondary);
-        }
-
-        .log-action {
-            color: var(--text-primary);
-        }
-
-        .log-channel {
-            color: var(--text-secondary);
-        }
-
-        .log-status {
-            font-family: var(--font-mono);
-            font-weight: 500;
-        }
-
-        .log-status.success { color: var(--success); }
-        .log-status.warning { color: var(--warning); }
-        .log-status.error { color: var(--error); }
-
-        /* Sidebar */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .sidebar-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        /* Belt Distribution */
-        .belt-chart {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .belt-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .belt-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 2px;
-        }
-
-        .belt-white { background: #ffffff; }
-        .belt-yellow { background: #fbbf24; }
-        .belt-orange { background: #fb923c; }
-        .belt-green { background: #4ade80; }
-        .belt-blue { background: #60a5fa; }
-        .belt-brown { background: #92400e; }
-        .belt-black { background: #000000; border: 1px solid var(--border); }
-
-        .belt-label {
-            flex: 1;
-            font-size: 0.875rem;
-        }
-
-        .belt-count {
-            font-family: var(--font-mono);
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .belt-bar {
-            height: 4px;
-            background: var(--border);
-            border-radius: 2px;
-            overflow: hidden;
-            flex: 1;
-        }
-
-        .belt-bar-fill {
-            height: 100%;
-            background: var(--accent);
-            width: 0%;
-            transition: width 0.5s;
-        }
-
-        /* Top Contributors */
-        .contributor-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .contributor-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.75rem;
-            background: var(--bg-tertiary);
-            border-radius: 4px;
-            font-size: 0.875rem;
-        }
-
-        .contributor-name {
-            font-weight: 500;
-        }
-
-        .contributor-xp {
-            color: var(--accent);
-            font-family: var(--font-mono);
-        }
-
-        /* Footer */
-        .footer {
-            border-top: 1px solid var(--border);
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-tertiary);
-            font-size: 0.875rem;
-        }
-
-        .footer-main {
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-accent {
-            color: var(--accent);
-        }
-
         /* Responsive */
-        @media (max-width: 1400px) {
-            .main {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                grid-column: 1;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .panels-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .log-item {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .header-content {
+        @media (max-width: 768px) {
+            .header {
                 flex-direction: column;
                 gap: 1rem;
+                text-align: center;
             }
 
-            .pulse-grid {
+            .queue-table {
+                font-size: 0.875rem;
+            }
+
+            .activity-item {
                 grid-template-columns: 1fr;
+                gap: 0.5rem;
             }
         }
     </style>
@@ -509,205 +420,123 @@
     <script>
         const DASHBOARD_DATA = {
             lastUpdated: new Date().toISOString(),
-            communityPulse: {
-                members: null,
-                activeWeek: null,
-                newJoins: null,
-                pendingSubmissions: null
-            },
+            botStatus: "idle",
             contentQueue: [],
-            automations: {
-                resourcePosting: { name: "Resource Posting", schedule: "Daily", status: "not_configured" },
-                discussionTopics: { name: "Discussion Topics", schedule: "2x/week", status: "not_configured" },
-                bountyGeneration: { name: "Bounty Generation", schedule: "Weekly", status: "not_configured" },
-                submissionReminders: { name: "Submission Reminders", schedule: "Auto", status: "not_configured" },
-                communityReport: { name: "Community Report", schedule: "Weekly", status: "not_configured" },
-                memberMonitoring: { name: "Member Monitoring", schedule: "Daily", status: "not_configured" }
-            },
-            activityLog: [],
-            beltDistribution: {},
-            topContributors: []
+            activityLog: [
+                {
+                    time: new Date().toISOString(),
+                    action: "Dashboard deployed — Design Jutsu Command Center is live",
+                    channel: "—",
+                    status: "success"
+                }
+            ]
         };
+
+        /*
+        BELT REFERENCE (for future use):
+        White, Yellow, Orange, Green, Blue, Purple, Brown, Brown Senior, 
+        Black 1st Dan, Black 2nd Dan, Black 3rd Dan, Black 4th Dan
+
+        ROLES REFERENCE:
+        Members: Novice, Apprentice, Veteran
+        Staff: Sensei, Dojo Master, Grandmaster
+        Special: Forge Members
+        */
     </script>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="header-title">
-                <h1>Design Jutsu <span class="dojo-accent">— Command Center</span></h1>
-            </div>
-            <div class="header-meta">
-                <div class="bot-status">
-                    <div class="status-indicator"></div>
-                    <span>Bot Active</span>
-                </div>
-                <div class="last-updated" id="lastUpdated">
-                    Updated: —
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="container">
-        <div class="main">
-            <div class="main-content">
-                <!-- Community Pulse -->
-                <section>
-                    <div class="pulse-grid">
-                        <div class="pulse-card">
-                            <div class="pulse-label">Total Members</div>
-                            <div class="pulse-value" id="totalMembers">—</div>
-                        </div>
-                        <div class="pulse-card">
-                            <div class="pulse-label">Active This Week</div>
-                            <div class="pulse-value" id="activeWeek">—</div>
-                        </div>
-                        <div class="pulse-card">
-                            <div class="pulse-label">New Joins This Week</div>
-                            <div class="pulse-value" id="newJoins">—</div>
-                        </div>
-                        <div class="pulse-card">
-                            <div class="pulse-label">Pending Submissions</div>
-                            <div class="pulse-value" id="pendingSubmissions">—</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Main Panels -->
-                <div class="panels-grid">
-                    <!-- Content Queue -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h2 class="panel-title">Content Queue</h2>
-                        </div>
-                        <div class="panel-body">
-                            <div id="contentQueue">
-                                <div class="empty-state">
-                                    <div class="empty-state-icon">📋</div>
-                                    <div class="empty-state-text">No items in queue</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Automation Status -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h2 class="panel-title">Automation Status</h2>
-                        </div>
-                        <div class="panel-body">
-                            <div class="automation-list" id="automationList"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity Log -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">Activity Log</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div class="activity-log" id="activityLog">
-                            <div class="empty-state">
-                                <div class="empty-state-icon">📊</div>
-                                <div class="empty-state-text">No activity yet</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <!-- Belt Distribution -->
-                <div class="sidebar-panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">Belt Distribution</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div class="belt-chart">
-                            <div class="belt-item">
-                                <div class="belt-color belt-white"></div>
-                                <div class="belt-label">White</div>
-                                <div class="belt-count">—</div>
-                            </div>
-                            <div class="belt-item">
-                                <div class="belt-color belt-yellow"></div>
-                                <div class="belt-label">Yellow</div>
-                                <div class="belt-count">—</div>
-                            </div>
-                            <div class="belt-item">
-                                <div class="belt-color belt-orange"></div>
-                                <div class="belt-label">Orange</div>
-                                <div class="belt-count">—</div>
-                            </div>
-                            <div class="belt-item">
-                                <div class="belt-color belt-green"></div>
-                                <div class="belt-label">Green</div>
-                                <div class="belt-count">—</div>
-                            </div>
-                            <div class="belt-item">
-                                <div class="belt-color belt-blue"></div>
-                                <div class="belt-label">Blue</div>
-                                <div class="belt-count">—</div>
-                            </div>
-                            <div class="belt-item">
-                                <div class="belt-color belt-brown"></div>
-                                <div class="belt-label">Brown</div>
-                                <div class="belt-count">—</div>
-                            </div>
-                            <div class="belt-item">
-                                <div class="belt-color belt-black"></div>
-                                <div class="belt-label">Black</div>
-                                <div class="belt-count">—</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Top Contributors -->
-                <div class="sidebar-panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">Top Contributors</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div id="topContributors">
-                            <div class="empty-state">
-                                <div class="empty-state-icon">🏆</div>
-                                <div class="empty-state-text">No data yet</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bounty Completion Rate -->
-                <div class="sidebar-panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">Bounty Completion</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div class="empty-state">
-                            <div class="pulse-value" style="font-size: 3rem;">—</div>
-                            <div class="empty-state-text">Completion rate</div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+    <!-- Password Gate -->
+    <div class="password-gate" id="passwordGate">
+        <div class="password-box">
+            <h1 class="password-title">Design Jutsu</h1>
+            <p class="password-subtitle">Command Center Access</p>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Enter password" autocomplete="off">
+            <button class="password-submit" onclick="checkPassword()">Unlock</button>
+            <p class="password-error" id="passwordError">Incorrect password</p>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-main">Powered by <span class="footer-accent">OpenClaw × Haiku</span></div>
-        <div>Dashboard auto-updates when bot pushes changes</div>
-    </footer>
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-title">Design Jutsu — Command Center</div>
+            <div class="header-center" id="lastUpdated">Loading...</div>
+            <div class="header-right">
+                <div class="bot-status-dot" id="botStatusDot"></div>
+                <span class="bot-status-label" id="botStatusLabel">Idle</span>
+            </div>
+        </header>
 
-    <!-- Render Logic -->
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Content Queue -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Content Queue</h2>
+                </div>
+                <div class="section-body">
+                    <div id="contentQueue"></div>
+                </div>
+            </section>
+
+            <!-- Activity Log -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Activity Log</h2>
+                </div>
+                <div class="section-body">
+                    <div class="activity-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="success">Success</button>
+                        <button class="filter-btn" data-filter="warning">Warnings</button>
+                        <button class="filter-btn" data-filter="error">Errors</button>
+                    </div>
+                    <div class="activity-list" id="activityLog"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script>
-        function formatTimestamp(isoString) {
-            if (!isoString) return '—';
+        // Password check
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            
+            if (input.value === 'grandmaster') {
+                sessionStorage.setItem('djAuth', 'true');
+                document.getElementById('passwordGate').style.display = 'none';
+                document.getElementById('dashboard').classList.add('unlocked');
+                renderDashboard();
+            } else {
+                error.classList.add('show');
+                input.value = '';
+                setTimeout(() => error.classList.remove('show'), 3000);
+            }
+        }
+
+        // Enter key support
+        document.getElementById('passwordInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // Check existing auth
+        if (sessionStorage.getItem('djAuth') === 'true') {
+            document.getElementById('passwordGate').style.display = 'none';
+            document.getElementById('dashboard').classList.add('unlocked');
+        }
+
+        // Format timestamp
+        function formatTime(isoString) {
             const date = new Date(isoString);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            
             return date.toLocaleString('en-US', {
                 month: 'short',
                 day: 'numeric',
@@ -716,17 +545,21 @@
             });
         }
 
+        // Render dashboard
         function renderDashboard() {
-            // Last Updated
+            // Last updated
             document.getElementById('lastUpdated').textContent = 
-                `Updated: ${formatTimestamp(DASHBOARD_DATA.lastUpdated)}`;
+                `Updated ${formatTime(DASHBOARD_DATA.lastUpdated)}`;
 
-            // Community Pulse
-            const pulse = DASHBOARD_DATA.communityPulse;
-            document.getElementById('totalMembers').textContent = pulse.members ?? '—';
-            document.getElementById('activeWeek').textContent = pulse.activeWeek ?? '—';
-            document.getElementById('newJoins').textContent = pulse.newJoins ?? '—';
-            document.getElementById('pendingSubmissions').textContent = pulse.pendingSubmissions ?? '—';
+            // Bot status
+            const statusDot = document.getElementById('botStatusDot');
+            const statusLabel = document.getElementById('botStatusLabel');
+            if (DASHBOARD_DATA.botStatus === 'active') {
+                statusDot.classList.add('active');
+                statusLabel.textContent = 'Active';
+            } else {
+                statusLabel.textContent = 'Idle';
+            }
 
             // Content Queue
             const queueContainer = document.getElementById('contentQueue');
@@ -734,30 +567,36 @@
                 queueContainer.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">📋</div>
-                        <div class="empty-state-text">No items in queue</div>
+                        <div class="empty-state-text">No content in queue — bot will add drafts here for your review</div>
                     </div>
                 `;
             } else {
-                // Render table when data is available
                 queueContainer.innerHTML = `
                     <table class="queue-table">
                         <thead>
                             <tr>
                                 <th>Type</th>
                                 <th>Title</th>
-                                <th>Channel</th>
+                                <th>Target Channel</th>
                                 <th>Status</th>
-                                <th>Scheduled</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${DASHBOARD_DATA.contentQueue.map(item => `
-                                <tr>
-                                    <td>${item.type}</td>
+                            ${DASHBOARD_DATA.contentQueue.map((item, idx) => `
+                                <tr class="queue-row" onclick="togglePreview(${idx})">
+                                    <td><span class="type-badge">${getTypeIcon(item.type)} ${item.type}</span></td>
                                     <td>${item.title}</td>
                                     <td>${item.channel}</td>
                                     <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span></td>
-                                    <td>${formatTimestamp(item.scheduled)}</td>
+                                    <td>${item.date}</td>
+                                </tr>
+                                <tr class="queue-preview-row">
+                                    <td colspan="5">
+                                        <div class="queue-preview" id="preview-${idx}">
+                                            ${item.preview || 'No preview available'}
+                                        </div>
+                                    </td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -765,20 +604,43 @@
                 `;
             }
 
-            // Automations
-            const automationList = document.getElementById('automationList');
-            automationList.innerHTML = Object.values(DASHBOARD_DATA.automations).map(auto => `
-                <div class="automation-item">
-                    <div>
-                        <div class="automation-name">${auto.name}</div>
-                        <div class="automation-status">${auto.schedule} • Not configured</div>
-                    </div>
-                    <div class="automation-toggle ${auto.status === 'active' ? 'active' : ''}"></div>
-                </div>
-            `).join('');
-
             // Activity Log
+            renderActivityLog();
+        }
+
+        function getTypeIcon(type) {
+            const icons = {
+                bounty: '🎯',
+                resource: '📚',
+                discussion: '💬',
+                announcement: '📢'
+            };
+            return icons[type.toLowerCase()] || '📄';
+        }
+
+        function togglePreview(idx) {
+            const preview = document.getElementById(`preview-${idx}`);
+            const row = event.target.closest('.queue-row');
+            
+            if (preview.classList.contains('show')) {
+                preview.classList.remove('show');
+                row.classList.remove('expanded');
+            } else {
+                // Close all other previews
+                document.querySelectorAll('.queue-preview').forEach(p => p.classList.remove('show'));
+                document.querySelectorAll('.queue-row').forEach(r => r.classList.remove('expanded'));
+                
+                preview.classList.add('show');
+                row.classList.add('expanded');
+            }
+        }
+
+        // Activity Log
+        let currentFilter = 'all';
+
+        function renderActivityLog() {
             const logContainer = document.getElementById('activityLog');
+            
             if (DASHBOARD_DATA.activityLog.length === 0) {
                 logContainer.innerHTML = `
                     <div class="empty-state">
@@ -786,45 +648,60 @@
                         <div class="empty-state-text">No activity yet</div>
                     </div>
                 `;
-            } else {
-                logContainer.innerHTML = DASHBOARD_DATA.activityLog.map(log => `
-                    <div class="log-item">
-                        <div class="log-time">${formatTimestamp(log.time)}</div>
-                        <div class="log-action">${log.action}</div>
-                        <div class="log-channel">${log.channel}</div>
-                        <div class="log-status ${log.status}">${log.status.toUpperCase()}</div>
-                    </div>
-                `).join('');
+                return;
             }
 
-            // Top Contributors
-            const contributorsContainer = document.getElementById('topContributors');
-            if (DASHBOARD_DATA.topContributors.length === 0) {
-                contributorsContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🏆</div>
-                        <div class="empty-state-text">No data yet</div>
-                    </div>
-                `;
-            } else {
-                contributorsContainer.innerHTML = `
-                    <div class="contributor-list">
-                        ${DASHBOARD_DATA.topContributors.map(contrib => `
-                            <div class="contributor-item">
-                                <span class="contributor-name">${contrib.name}</span>
-                                <span class="contributor-xp">${contrib.xp} XP</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            }
+            const logs = DASHBOARD_DATA.activityLog.slice(0, 50).reverse();
+            logContainer.innerHTML = logs.map(log => `
+                <div class="activity-item" data-status="${log.status}">
+                    <div class="activity-time">${formatTime(log.time)}</div>
+                    <div class="activity-action">${log.action}</div>
+                    <div class="activity-channel">${log.channel}</div>
+                    <div class="activity-status-dot ${log.status}"></div>
+                </div>
+            `).join('');
+
+            applyFilter(currentFilter);
         }
 
-        // Initial render
-        renderDashboard();
+        function applyFilter(filter) {
+            currentFilter = filter;
+            const items = document.querySelectorAll('.activity-item');
+            
+            items.forEach(item => {
+                if (filter === 'all' || item.dataset.status === filter) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
 
-        // Auto-refresh every 30 seconds
-        setInterval(renderDashboard, 30000);
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === filter) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Filter button handlers
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+        });
+
+        // Auto-refresh
+        setInterval(() => {
+            if (document.getElementById('dashboard').classList.contains('unlocked')) {
+                renderDashboard();
+            }
+        }, 30000);
+
+        // Initial render
+        if (sessionStorage.getItem('djAuth') === 'true') {
+            renderDashboard();
+        }
     </script>
 </body>
 </html>
