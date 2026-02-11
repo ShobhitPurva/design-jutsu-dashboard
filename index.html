@@ -627,6 +627,245 @@
             text-align: left;
         }
 
+        /* Command Buttons */
+        .queue-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: var(--spacing);
+            padding-top: var(--spacing);
+            border-top: 1px solid var(--border);
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-primary);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            min-height: 36px;
+            white-space: nowrap;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-card);
+            border-color: var(--crimson);
+            color: var(--crimson);
+        }
+
+        .action-btn.approve:hover {
+            background: var(--success);
+            border-color: var(--success);
+            color: #ffffff;
+        }
+
+        .action-btn.reject:hover {
+            background: var(--error);
+            border-color: var(--error);
+            color: #ffffff;
+        }
+
+        .action-btn.recommend:hover {
+            background: var(--warning);
+            border-color: var(--warning);
+            color: #ffffff;
+        }
+
+        /* Text Input Overlay */
+        .input-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .input-overlay.show {
+            display: flex;
+        }
+
+        .input-modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: var(--spacing);
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-modal-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing);
+            color: var(--text-primary);
+        }
+
+        .input-modal-textarea {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9375rem;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: var(--spacing);
+            transition: border-color 0.2s;
+        }
+
+        .input-modal-textarea:focus {
+            outline: none;
+            border-color: var(--crimson);
+        }
+
+        .input-modal-buttons {
+            display: flex;
+            gap: calc(var(--spacing) / 2);
+            justify-content: flex-end;
+        }
+
+        .input-modal-btn {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            min-height: 36px;
+        }
+
+        .input-modal-btn:hover {
+            background: var(--bg-card);
+        }
+
+        .input-modal-btn.primary {
+            background: var(--crimson);
+            border-color: var(--crimson);
+            color: #ffffff;
+        }
+
+        .input-modal-btn.primary:hover {
+            background: var(--crimson-dark);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: var(--success);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast-checkmark {
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Floating Discord Button */
+        .discord-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--crimson);
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(163, 22, 33, 0.4);
+            text-decoration: none;
+        }
+
+        .discord-button:hover {
+            background: var(--crimson-dark);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(163, 22, 33, 0.6);
+        }
+
+        .discord-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Mobile adjustments for buttons */
+        @media (max-width: 768px) {
+            .queue-actions {
+                gap: 6px;
+            }
+
+            .action-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+                flex: 1;
+                min-width: 0;
+            }
+
+            .input-modal {
+                width: 95%;
+            }
+
+            .discord-button {
+                width: 48px;
+                height: 48px;
+                font-size: 1.25rem;
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             body {
@@ -723,8 +962,9 @@
     <!-- Data Structure -->
     <script>
         const DASHBOARD_DATA = {
-            lastUpdated: "2026-02-11T12:53:00.000Z",
+            lastUpdated: "2026-02-11T15:39:00.000Z",
             botStatus: "idle",
+            reviewMode: true,
             contentQueue: [
                 {
                     id: 6,
@@ -988,6 +1228,27 @@
         <footer class="footer">
             Powered by OpenClaw × Haiku
         </footer>
+
+        <!-- Floating Discord Button -->
+        <a href="#" class="discord-button" id="discordButton" title="Open Design Jutsu Discord">💬</a>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-checkmark">✓</span>
+        <span id="toastMessage">Command copied — paste in Discord</span>
+    </div>
+
+    <!-- Input Modal Overlay -->
+    <div class="input-overlay" id="inputOverlay">
+        <div class="input-modal">
+            <div class="input-modal-title" id="inputModalTitle">Enter changes</div>
+            <textarea class="input-modal-textarea" id="inputModalTextarea" placeholder="Type your changes..."></textarea>
+            <div class="input-modal-buttons">
+                <button class="input-modal-btn" onclick="closeInputModal()">Cancel</button>
+                <button class="input-modal-btn primary" onclick="copyFromModal()">Copy to Clipboard</button>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->
@@ -995,6 +1256,111 @@
         let expandedQueue = null;
         let expandedRoshi = null;
         let expandedActivity = null;
+        let currentModalAction = null;
+        let currentModalId = null;
+
+        // Toast notifications
+        function showToast(message = "Command copied — paste in Discord") {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Clipboard copy
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast();
+                return true;
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                return false;
+            }
+        }
+
+        // Input Modal
+        function openInputModal(action, id, title) {
+            currentModalAction = action;
+            currentModalId = id;
+            document.getElementById('inputModalTitle').textContent = title;
+            document.getElementById('inputModalTextarea').value = '';
+            document.getElementById('inputModalTextarea').focus();
+            document.getElementById('inputOverlay').classList.add('show');
+        }
+
+        function closeInputModal() {
+            document.getElementById('inputOverlay').classList.remove('show');
+            currentModalAction = null;
+            currentModalId = null;
+        }
+
+        function copyFromModal() {
+            const text = document.getElementById('inputModalTextarea').value.trim();
+            if (!text) {
+                showToast('Please enter some text');
+                return;
+            }
+
+            let command = '';
+            if (currentModalAction === 'edit') {
+                command = `edit [${currentModalId}]: ${text}`;
+            } else if (currentModalAction === 'recommend') {
+                command = `recommend [${currentModalId}]: ${text}`;
+            }
+
+            if (command) {
+                copyToClipboard(command);
+                closeInputModal();
+            }
+        }
+
+        // Action handlers
+        async function approveAction(id) {
+            await copyToClipboard(`approve [${id}]`);
+        }
+
+        async function editAction(id) {
+            openInputModal('edit', id, '✏️ Edit Changes');
+        }
+
+        async function recommendAction(id) {
+            openInputModal('recommend', id, '💬 Recommend Changes');
+        }
+
+        async function rejectAction(id) {
+            await copyToClipboard(`reject [${id}]`);
+        }
+
+        async function deleteAction(id) {
+            await copyToClipboard(`reject [${id}]: not needed`);
+        }
+
+        // Discord button
+        document.addEventListener('DOMContentLoaded', () => {
+            const discordBtn = document.getElementById('discordButton');
+            if (discordBtn) {
+                discordBtn.onclick = (e) => {
+                    e.preventDefault();
+                    window.open('#', '_blank');
+                };
+            }
+        });
+
+        // Close modal on overlay click
+        document.addEventListener('click', (e) => {
+            const overlay = document.getElementById('inputOverlay');
+            if (e.target === overlay) {
+                closeInputModal();
+            }
+        });
+
+        // Close modal on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('inputOverlay').classList.contains('show')) {
+                closeInputModal();
+            }
+        });
 
         // Password check
         function checkPassword() {
@@ -1131,6 +1497,13 @@
                         <td colspan="5">
                             <div class="queue-preview ${expandedQueue === idx ? 'show' : ''}" id="preview-${idx}">
                                 ${item.preview || 'No preview available'}
+                                <div class="queue-actions">
+                                    <button class="action-btn approve" onclick="approveAction(${item.id})" title="Approve this item">✅ Approve</button>
+                                    <button class="action-btn" onclick="editAction(${item.id})" title="Suggest edits">✏️ Edit</button>
+                                    <button class="action-btn recommend" onclick="recommendAction(${item.id})" title="Recommend changes">💬 Recommend</button>
+                                    <button class="action-btn reject" onclick="rejectAction(${item.id})" title="Reject this item">❌ Reject</button>
+                                    <button class="action-btn reject" onclick="deleteAction(${item.id})" title="Delete this item">🗑️ Delete</button>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -1172,6 +1545,13 @@
                         </div>
                         <div class="queue-card-preview ${expandedQueue === idx ? 'show' : ''}" id="preview-mobile-${idx}">
                             ${item.preview || 'No preview available'}
+                            <div class="queue-actions">
+                                <button class="action-btn approve" onclick="approveAction(${item.id})" title="Approve this item">✅ Approve</button>
+                                <button class="action-btn" onclick="editAction(${item.id})" title="Suggest edits">✏️ Edit</button>
+                                <button class="action-btn recommend" onclick="recommendAction(${item.id})" title="Recommend changes">💬 Recommend</button>
+                                <button class="action-btn reject" onclick="rejectAction(${item.id})" title="Reject this item">❌ Reject</button>
+                                <button class="action-btn reject" onclick="deleteAction(${item.id})" title="Delete this item">🗑️ Delete</button>
+                            </div>
                         </div>
                     </div>
                 `;
