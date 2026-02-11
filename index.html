@@ -166,15 +166,6 @@
             text-align: center;
         }
 
-        .header-center.stale {
-            animation: pulse-warning 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-warning {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
         .header-right {
             display: flex;
             align-items: center;
@@ -243,110 +234,23 @@
             padding: calc(var(--spacing) * 1.5);
         }
 
-        /* Content Queue */
-        .queue-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .queue-table th {
-            text-align: left;
-            padding: 12px var(--spacing);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-            font-weight: 600;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .queue-row {
-            cursor: pointer;
-            transition: background 0.2s;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .queue-row:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .queue-row.expanded {
-            background: var(--bg-tertiary);
-        }
-
-        .queue-row td {
-            padding: var(--spacing);
-            vertical-align: middle;
-        }
-
-        .queue-preview-row {
-            border-bottom: 1px solid var(--border);
-        }
-
-        .queue-preview {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-            padding: 0 calc(var(--spacing) * 1.5);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 0.9375rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .queue-preview.show {
-            max-height: 600px;
-            padding: calc(var(--spacing) * 1.5);
-            overflow-y: auto;
-        }
-
-        .type-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: calc(var(--spacing) / 2);
-            padding: 6px 12px;
-            background: var(--bg-card);
-            border-radius: 4px;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: #ffffff;
-            white-space: nowrap;
-        }
-
-        .status-draft { background: var(--warning); }
-        .status-approved { background: var(--success); }
-        .status-posted { background: var(--blue); }
-        .status-rejected { background: var(--error); }
-
-        /* Mobile Cards for Queue */
+        /* Content Queue Cards */
         .queue-cards {
-            display: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing);
         }
 
         .queue-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             padding: var(--spacing);
-            margin-bottom: var(--spacing);
-            cursor: pointer;
-            transition: background 0.2s;
-            min-height: 44px;
+            transition: border-color 0.2s;
         }
 
-        .queue-card:hover {
-            background: var(--bg-tertiary);
+        .queue-card.expanded {
+            border-color: var(--crimson-dim);
         }
 
         .queue-card-header {
@@ -354,253 +258,302 @@
             justify-content: space-between;
             align-items: flex-start;
             gap: var(--spacing);
-            margin-bottom: calc(var(--spacing) / 2);
+            cursor: pointer;
+            padding: calc(var(--spacing) / 2);
+            margin: calc(var(--spacing) / -2);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .queue-card-header:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .queue-card-left {
+            flex: 1;
+        }
+
+        .queue-card-id {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
         .queue-card-title {
             font-weight: 600;
-            font-size: 1rem;
-            flex: 1;
-            line-height: 1.5;
+            font-size: 1.125rem;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 8px;
         }
 
         .queue-card-meta {
             display: flex;
-            flex-direction: column;
-            gap: calc(var(--spacing) / 2);
+            flex-wrap: wrap;
+            gap: 8px;
             font-size: 0.875rem;
             color: var(--text-secondary);
         }
 
-        .queue-card-preview {
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .status-draft { background: var(--warning); }
+        .status-approved { background: var(--success); }
+        .status-posted { background: var(--blue); }
+        .status-rejected { background: var(--error); }
+
+        .queue-card-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out, margin-top 0.3s ease-out;
-            margin-top: 0;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0;
+        }
+
+        .queue-card.expanded .queue-card-content {
+            max-height: 2000px;
             padding-top: var(--spacing);
             border-top: 1px solid var(--border);
+            margin-top: var(--spacing);
+        }
+
+        .queue-preview {
             font-size: 0.9375rem;
             line-height: 1.6;
             color: var(--text-primary);
             white-space: pre-wrap;
             word-wrap: break-word;
-        }
-
-        .queue-card-preview.show {
-            max-height: 600px;
-            margin-top: var(--spacing);
-            overflow-y: auto;
-        }
-
-        /* Roshi Weekly Section */
-        .roshi-grid {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 0;
-            font-size: 0.875rem;
-        }
-
-        .roshi-grid-header {
-            display: contents;
-        }
-
-        .roshi-grid-header > div {
-            padding: 10px var(--spacing);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-            font-weight: 600;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .roshi-row {
-            display: contents;
-            cursor: pointer;
-        }
-
-        .roshi-row > div {
-            padding: 12px var(--spacing);
-            border-bottom: 1px solid var(--border);
-            transition: background 0.2s;
-        }
-
-        .roshi-row:hover > div {
-            background: var(--bg-tertiary);
-        }
-
-        .roshi-row.expandable > div {
-            cursor: pointer;
-        }
-
-        .roshi-day {
-            font-weight: 500;
-        }
-
-        .roshi-channel {
-            color: var(--text-secondary);
-        }
-
-        .roshi-status {
-            text-align: right;
-        }
-
-        .roshi-status-scheduled { color: var(--text-secondary); }
-        .roshi-status-posted { color: var(--success); font-weight: 500; }
-        .roshi-status-skipped { color: var(--text-tertiary); font-style: italic; }
-
-        .roshi-expand {
-            grid-column: 1 / -1;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-            padding: 0 var(--spacing);
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .roshi-expand.show {
-            max-height: 400px;
-            padding: var(--spacing);
-            overflow-y: auto;
-        }
-
-        .roshi-expand-content {
-            font-size: 0.875rem;
-            line-height: 1.6;
-            color: var(--text-primary);
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        /* Activity Log */
-        .activity-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: calc(var(--spacing) / 2);
             margin-bottom: var(--spacing);
         }
 
-        .filter-btn {
-            padding: 8px var(--spacing);
+        /* Action Buttons */
+        .queue-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-top: var(--spacing);
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 16px;
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--text-secondary);
+            border-radius: 6px;
+            color: var(--text-primary);
             font-size: 0.875rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             font-family: inherit;
-            font-weight: 500;
             min-height: 44px;
-            display: flex;
-            align-items: center;
+            white-space: nowrap;
         }
 
-        .filter-btn:hover {
+        .action-btn:hover:not(:disabled) {
             background: var(--bg-card);
-            border-color: var(--crimson-dim);
+            border-color: var(--crimson);
+            transform: translateY(-1px);
         }
 
-        .filter-btn.active {
-            background: var(--crimson);
-            border-color: var(--crimson);
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .action-btn.approve {
+            background: var(--success);
+            border-color: var(--success);
             color: #ffffff;
         }
 
-        .activity-list {
-            max-height: 400px;
-            overflow-y: auto;
+        .action-btn.approve:hover:not(:disabled) {
+            background: #0d9668;
+            border-color: #0d9668;
         }
 
-        .activity-list::-webkit-scrollbar {
-            width: 6px;
+        .action-btn.reject {
+            background: var(--error);
+            border-color: var(--error);
+            color: #ffffff;
         }
 
-        .activity-list::-webkit-scrollbar-track {
-            background: var(--bg-tertiary);
+        .action-btn.reject:hover:not(:disabled) {
+            background: #dc2626;
+            border-color: #dc2626;
         }
 
-        .activity-list::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
+        .action-btn.suggest {
+            background: var(--warning);
+            border-color: var(--warning);
+            color: #ffffff;
         }
 
-        .activity-item {
-            display: grid;
-            grid-template-columns: 140px 1fr 180px 20px;
-            gap: var(--spacing);
-            padding: var(--spacing);
-            border-bottom: 1px solid var(--border);
-            font-size: 0.875rem;
-            align-items: center;
-            cursor: pointer;
-            transition: background 0.2s;
-            min-height: 44px;
+        .action-btn.suggest:hover:not(:disabled) {
+            background: #d97706;
+            border-color: #d97706;
         }
 
-        .activity-item:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
-        .activity-item.hidden {
+        /* Edit/Suggest Editor */
+        .edit-editor {
             display: none;
-        }
-
-        .activity-time {
-            color: var(--text-secondary);
-        }
-
-        .activity-action {
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-
-        .activity-channel {
-            color: var(--text-secondary);
-        }
-
-        .activity-status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            justify-self: end;
-        }
-
-        .activity-status-dot.success { background: var(--success); }
-        .activity-status-dot.warning { background: var(--warning); }
-        .activity-status-dot.error { background: var(--error); }
-
-        .activity-expand {
-            grid-column: 1 / -1;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-            padding: 0;
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border);
-            margin: 0 calc(var(--spacing) * -1);
-        }
-
-        .activity-expand.show {
-            max-height: 400px;
+            margin-top: var(--spacing);
             padding: var(--spacing);
-            overflow-y: auto;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
         }
 
-        .activity-expand-content {
+        .edit-editor.show {
+            display: block;
+        }
+
+        .edit-label {
             font-size: 0.875rem;
-            line-height: 1.6;
-            color: var(--text-primary);
-            white-space: pre-wrap;
-            word-wrap: break-word;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
         }
 
-        /* Empty States */
+        .edit-textarea {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9375rem;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 8px;
+            transition: border-color 0.2s;
+        }
+
+        .edit-textarea:focus {
+            outline: none;
+            border-color: var(--crimson);
+        }
+
+        .edit-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-btn {
+            flex: 1;
+            padding: 10px;
+            background: var(--crimson);
+            border: 1px solid var(--crimson);
+            border-radius: 6px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 40px;
+        }
+
+        .edit-btn:hover:not(:disabled) {
+            background: var(--crimson-dark);
+        }
+
+        .edit-btn.cancel {
+            background: var(--bg-tertiary);
+            border-color: var(--border);
+            color: var(--text-primary);
+        }
+
+        .edit-btn.cancel:hover {
+            background: var(--bg-card);
+        }
+
+        .edit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--success);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        .toast.warning {
+            background: var(--warning);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: calc(var(--spacing) * 4) calc(var(--spacing) * 2);
@@ -627,259 +580,12 @@
             text-align: left;
         }
 
-        /* Command Buttons */
-        .queue-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: var(--spacing);
-            padding-top: var(--spacing);
-            border-top: 1px solid var(--border);
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 8px 14px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            color: var(--text-primary);
-            font-size: 0.8125rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-            min-height: 36px;
-            white-space: nowrap;
-        }
-
-        .action-btn:hover {
-            background: var(--bg-card);
-            border-color: var(--crimson);
-            color: var(--crimson);
-        }
-
-        .action-btn.approve:hover {
-            background: var(--success);
-            border-color: var(--success);
-            color: #ffffff;
-        }
-
-        .action-btn.reject:hover {
-            background: var(--error);
-            border-color: var(--error);
-            color: #ffffff;
-        }
-
-        .action-btn.recommend:hover {
-            background: var(--warning);
-            border-color: var(--warning);
-            color: #ffffff;
-        }
-
-        /* Text Input Overlay */
-        .input-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(4px);
-        }
-
-        .input-overlay.show {
-            display: flex;
-        }
-
-        .input-modal {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: var(--spacing);
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-        }
-
-        .input-modal-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: var(--spacing);
-            color: var(--text-primary);
-        }
-
-        .input-modal-textarea {
-            width: 100%;
-            padding: 12px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.9375rem;
-            resize: vertical;
-            min-height: 100px;
-            margin-bottom: var(--spacing);
-            transition: border-color 0.2s;
-        }
-
-        .input-modal-textarea:focus {
-            outline: none;
-            border-color: var(--crimson);
-        }
-
-        .input-modal-buttons {
-            display: flex;
-            gap: calc(var(--spacing) / 2);
-            justify-content: flex-end;
-        }
-
-        .input-modal-btn {
-            padding: 8px 16px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-            min-height: 36px;
-        }
-
-        .input-modal-btn:hover {
-            background: var(--bg-card);
-        }
-
-        .input-modal-btn.primary {
-            background: var(--crimson);
-            border-color: var(--crimson);
-            color: #ffffff;
-        }
-
-        .input-modal-btn.primary:hover {
-            background: var(--crimson-dark);
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            background: var(--success);
-            color: #ffffff;
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            z-index: 999;
-            display: none;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .toast.show {
-            display: flex;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .toast-checkmark {
-            width: 16px;
-            height: 16px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Floating Discord Button */
-        .discord-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 50;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--crimson);
-            border: none;
-            color: #ffffff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(163, 22, 33, 0.4);
-            text-decoration: none;
-        }
-
-        .discord-button:hover {
-            background: var(--crimson-dark);
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(163, 22, 33, 0.6);
-        }
-
-        .discord-button:active {
-            transform: scale(0.95);
-        }
-
-        /* Mobile adjustments for buttons */
-        @media (max-width: 768px) {
-            .queue-actions {
-                gap: 6px;
-            }
-
-            .action-btn {
-                padding: 6px 12px;
-                font-size: 0.75rem;
-                flex: 1;
-                min-width: 0;
-            }
-
-            .input-modal {
-                width: 95%;
-            }
-
-            .discord-button {
-                width: 48px;
-                height: 48px;
-                font-size: 1.25rem;
-                bottom: 16px;
-                right: 16px;
-            }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
-            body {
-                font-size: 14px;
-            }
-
             .header {
                 grid-template-columns: 1fr;
                 gap: calc(var(--spacing) / 2);
                 padding: var(--spacing);
-            }
-
-            .header-title {
-                font-size: 1.125rem;
             }
 
             .header-center {
@@ -894,66 +600,12 @@
                 padding: var(--spacing);
             }
 
-            .section-body {
-                padding: var(--spacing);
-            }
-
-            /* Hide table, show cards */
-            .queue-table {
-                display: none;
-            }
-
-            .queue-cards {
-                display: block;
-            }
-
-            /* Roshi grid stacks better */
-            .roshi-grid {
-                font-size: 0.8125rem;
-            }
-
-            .roshi-grid-header > div,
-            .roshi-row > div {
-                padding: 10px 12px;
-            }
-
-            /* Activity log single column */
-            .activity-item {
+            .queue-actions {
                 grid-template-columns: 1fr;
-                gap: calc(var(--spacing) / 2);
-                padding: var(--spacing);
             }
 
-            .activity-status-dot {
-                position: absolute;
-                right: var(--spacing);
-                top: var(--spacing);
-            }
-
-            .activity-item {
-                position: relative;
-            }
-
-            .activity-list {
-                max-height: 300px;
-            }
-
-            .password-title {
-                font-size: 1.5rem;
-            }
-
-            .password-box {
-                padding: calc(var(--spacing) * 2);
-            }
-        }
-
-        @media (max-width: 375px) {
-            .header-title {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 0.875rem;
+            .action-btn {
+                width: 100%;
             }
         }
     </style>
@@ -961,12 +613,11 @@
 <body>
     <!-- Data Structure -->
     <script>
-        // Cloudflare Worker URL (replace with your actual worker URL)
-        const WORKER_URL = 'https://design-jutsu-worker.your-domain.workers.dev';
-        // Or use: https://your-subdomain.workers.dev
+        // Cloudflare Worker API endpoint
+        const API_URL = 'https://design-jutsu-api.your-subdomain.workers.dev';
 
         const DASHBOARD_DATA = {
-            lastUpdated: "2026-02-11T15:39:00.000Z",
+            lastUpdated: "2026-02-11T15:55:00.000Z",
             botStatus: "idle",
             reviewMode: true,
             contentQueue: [
@@ -1005,161 +656,9 @@
                     status: "draft",
                     date: "2026-02-10",
                     preview: "🔧 Elytra\n📂 Type: UI Kit\n💰 Pricing: Free\n💻 Platform: Figma\n\nWhat it does: Open-source design system with production-ready components. Fully customizable, accessible, and ready to hand off to developers.\n\nBest for:\n→ Speeding up component design\n→ Learning design system best practices\n\n🔗 https://www.elytra.design/"
-                },
-                {
-                    id: 2,
-                    type: "resource",
-                    title: "Figma to Code — Design-to-Dev Magic",
-                    channel: "Resources",
-                    status: "draft",
-                    date: "2026-02-10",
-                    preview: "🔧 Figma to Code\n📂 Type: Developer Tool\n💰 Pricing: Free with premium features\n💻 Platform: Figma plugin\n\nWhat it does: Auto-generates clean, production-ready code from your Figma designs. Supports React, Vue, Tailwind, and vanilla CSS. Saves hours on front-end handoff.\n\nBest for:\n→ Speeding up design-to-dev workflow\n→ Reducing back-and-forth on implementation\n\n🔗 https://www.figma.com/plugins/Figma%20to%20Code"
-                },
-                {
-                    id: 1,
-                    type: "resource",
-                    title: "Penpot — Open Source Design Tool",
-                    channel: "Resources",
-                    status: "draft",
-                    date: "2026-02-10",
-                    preview: "🔧 Penpot\n📂 Type: Design Platform\n💰 Pricing: Free\n💻 Platform: Web\n\nWhat it does: Free, open-source alternative to Figma with real-time collaboration, prototyping, and design-to-code capabilities. Perfect for design teams working alongside developers.\n\nBest for:\n→ Team collaboration on design files\n→ Open-source design workflow\n\n🔗 https://penpot.app"
-                }
-            ],
-            roshiWeekly: [
-                {
-                    day: "Monday",
-                    channel: "General",
-                    status: "scheduled",
-                    content: null
-                },
-                {
-                    day: "Tuesday",
-                    channel: "General",
-                    status: "posted",
-                    content: "Good morning designers! 🌅\n\nToday's focus: Design systems and consistency. How do you maintain design consistency across large products?"
-                },
-                {
-                    day: "Wednesday",
-                    channel: "General",
-                    status: "scheduled",
-                    content: null
-                },
-                {
-                    day: "Thursday",
-                    channel: "General",
-                    status: "scheduled",
-                    content: null
-                },
-                {
-                    day: "Friday",
-                    channel: "General",
-                    status: "skipped",
-                    content: "Skipped: Weekly hackathon announcement"
-                },
-                {
-                    day: "Saturday",
-                    channel: "—",
-                    status: "scheduled",
-                    content: null
-                },
-                {
-                    day: "Sunday",
-                    channel: "—",
-                    status: "scheduled",
-                    content: null
-                }
-            ],
-            activityLog: [
-                {
-                    time: "2026-02-11T12:53:00.000Z",
-                    action: "Roshi Resources draft: Storyset — Free, Customizable Illustrations",
-                    channel: "Resources",
-                    status: "success",
-                    details: "Open-source illustration library with customizable colors and elements. Awaiting approval."
-                },
-                {
-                    time: "2026-02-10T16:49:00.000Z",
-                    action: "Initial content batch generated: 5 resources, 3 discussions, 3 general chat, 2 tools",
-                    channel: "—",
-                    status: "success",
-                    details: "Community seed content ready for approval. Resources in dashboard queue. Discussions, chat, and tools scheduled for auto-post across the week."
-                },
-                {
-                    time: "2026-02-10T16:48:55.000Z",
-                    action: "Roshi Resources draft: Accessibility Insights",
-                    channel: "Resources",
-                    status: "success",
-                    details: "Free web accessibility testing tool. Awaiting approval."
-                },
-                {
-                    time: "2026-02-10T16:48:50.000Z",
-                    action: "Roshi Resources draft: Elytra UI Kit",
-                    channel: "Resources",
-                    status: "success",
-                    details: "Open-source design system with production-ready components. Awaiting approval."
-                },
-                {
-                    time: "2026-02-10T16:48:45.000Z",
-                    action: "Roshi Resources draft: Inter Font",
-                    channel: "Resources",
-                    status: "success",
-                    details: "Free, open-source typeface designed for screens. Awaiting approval."
-                },
-                {
-                    time: "2026-02-10T16:48:40.000Z",
-                    action: "Roshi posted to General Chat",
-                    channel: "General Chat",
-                    status: "success",
-                    details: "Just noticed more apps ditching skip buttons on onboarding. Turns out friction ≠ commitment. People just leave. What's your approach — frictionless or earn the time? 🤔"
-                },
-                {
-                    time: "2026-02-10T16:48:30.000Z",
-                    action: "Roshi Resources draft: Figma to Code",
-                    channel: "Resources",
-                    status: "success",
-                    details: "Developer tool for design-to-code automation. Awaiting approval."
-                },
-                {
-                    time: "2026-02-10T16:48:00.000Z",
-                    action: "Roshi daily engagement batch run (Monday)",
-                    channel: "—",
-                    status: "success",
-                    details: "Generated 2 posts: 1 Resources draft (approval pipeline) + 1 General Chat auto-post."
-                },
-                {
-                    time: "2026-02-10T16:47:30.000Z",
-                    action: "Resource draft generated: Penpot — Open Source Design Tool",
-                    channel: "—",
-                    status: "success",
-                    details: "Generated draft for Penpot design tool. Awaiting approval."
-                },
-                {
-                    time: "2026-02-10T16:47:00.000Z",
-                    action: "Resource automation configured — MWF 10am schedule",
-                    channel: "—",
-                    status: "success",
-                    details: "Scheduled automated resource posting for Monday, Wednesday, Friday at 10:00 UTC."
-                },
-                {
-                    time: "2026-02-10T16:46:00.000Z",
-                    action: "Dashboard deployed — Design Jutsu Command Center is live",
-                    channel: "—",
-                    status: "success",
-                    details: "Initial deployment of admin dashboard to GitHub Pages."
                 }
             ]
         };
-
-        /*
-        BELT REFERENCE (for future use):
-        White, Yellow, Orange, Green, Blue, Purple, Brown, Brown Senior, 
-        Black 1st Dan, Black 2nd Dan, Black 3rd Dan, Black 4th Dan
-
-        ROLES REFERENCE:
-        Members: Novice, Apprentice, Veteran
-        Staff: Sensei, Dojo Master, Grandmaster
-        Special: Forge Members
-        */
     </script>
 
     <!-- Password Gate -->
@@ -1193,273 +692,27 @@
                     <h2 class="section-title">Content Queue</h2>
                 </div>
                 <div class="section-body">
-                    <!-- Desktop Table -->
-                    <div id="contentQueueTable"></div>
-                    
-                    <!-- Mobile Cards -->
-                    <div class="queue-cards" id="contentQueueCards"></div>
-                </div>
-            </section>
-
-            <!-- Roshi Weekly -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">Roshi — This Week</h2>
-                </div>
-                <div class="section-body">
-                    <div id="roshiWeekly"></div>
-                </div>
-            </section>
-
-            <!-- Activity Log -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">Activity Log</h2>
-                </div>
-                <div class="section-body">
-                    <div class="activity-filters">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="success">Success</button>
-                        <button class="filter-btn" data-filter="warning">Warnings</button>
-                        <button class="filter-btn" data-filter="error">Errors</button>
-                    </div>
-                    <div class="activity-list" id="activityLog"></div>
+                    <div class="queue-cards" id="contentQueue"></div>
                 </div>
             </section>
         </div>
 
         <!-- Footer -->
         <footer class="footer">
-            Powered by OpenClaw × Haiku
+            Powered by OpenClaw × Cloudflare
         </footer>
-
-        <!-- Floating Discord Button -->
-        <a href="#" class="discord-button" id="discordButton" title="Open Design Jutsu Discord">💬</a>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Toast -->
     <div class="toast" id="toast">
-        <span class="toast-checkmark">✓</span>
-        <span id="toastMessage">Command copied — paste in Discord</span>
-    </div>
-
-    <!-- Input Modal Overlay -->
-    <div class="input-overlay" id="inputOverlay">
-        <div class="input-modal">
-            <div class="input-modal-title" id="inputModalTitle">Enter changes</div>
-            <textarea class="input-modal-textarea" id="inputModalTextarea" placeholder="Type your changes..."></textarea>
-            <div class="input-modal-buttons">
-                <button class="input-modal-btn" onclick="closeInputModal()">Cancel</button>
-                <button class="input-modal-btn primary" onclick="copyFromModal()">Copy to Clipboard</button>
-            </div>
-        </div>
+        <span id="toastMessage"></span>
     </div>
 
     <!-- Scripts -->
     <script>
-        let expandedQueue = null;
-        let expandedRoshi = null;
-        let expandedActivity = null;
-        let currentModalAction = null;
-        let currentModalId = null;
-
-        // Toast notifications
-        function showToast(message = "Command queued", type = 'success') {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').textContent = message;
-            
-            // Update toast styling based on type
-            if (type === 'error') {
-                toast.style.background = 'var(--error)';
-            } else if (type === 'info') {
-                toast.style.background = 'var(--warning)';
-            } else {
-                toast.style.background = 'var(--success)';
-            }
-            
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        // Input Modal
-        function openInputModal(action, id, title) {
-            currentModalAction = action;
-            currentModalId = id;
-            document.getElementById('inputModalTitle').textContent = title;
-            document.getElementById('inputModalTextarea').value = '';
-            document.getElementById('inputModalTextarea').focus();
-            document.getElementById('inputOverlay').classList.add('show');
-        }
-
-        function closeInputModal() {
-            document.getElementById('inputOverlay').classList.remove('show');
-            currentModalAction = null;
-            currentModalId = null;
-        }
-
-        async function copyFromModal() {
-            const text = document.getElementById('inputModalTextarea').value.trim();
-            if (!text) {
-                showToast('Please enter some text');
-                return;
-            }
-
-            await sendCommandToWorker(currentModalAction, currentModalId, text);
-            closeInputModal();
-        }
-
-        // Auto-refresh polling
-        let pollCount = 0;
-        const MAX_POLLS = 30; // 5 minutes max (10s × 30)
-        let pollInterval = null;
-
-        async function pollForUpdate() {
-            if (pollInterval) return; // Already polling
-
-            pollCount = 0;
-            pollInterval = setInterval(async () => {
-                pollCount++;
-
-                try {
-                    // Fetch latest data from GitHub
-                    const response = await fetch(
-                        'https://raw.githubusercontent.com/ShobhitPurva/design-jutsu-dashboard/main/index.html',
-                        { cache: 'no-store' }
-                    );
-
-                    if (response.ok) {
-                        const html = await response.text();
-                        
-                        // Extract DASHBOARD_DATA from the fetched HTML
-                        const match = html.match(/const DASHBOARD_DATA = ({[\s\S]*?});/);
-                        if (match) {
-                            const newData = eval('(' + match[1] + ')');
-                            
-                            // Check if data has changed
-                            if (JSON.stringify(newData) !== JSON.stringify(DASHBOARD_DATA)) {
-                                // Update the data
-                                Object.assign(DASHBOARD_DATA, newData);
-                                renderDashboard();
-                                showToast('✓ Dashboard updated', 'success');
-                                
-                                // Stop polling
-                                clearInterval(pollInterval);
-                                pollInterval = null;
-                                return;
-                            }
-                        }
-                    }
-                } catch (error) {
-                    console.error('Poll error:', error);
-                }
-
-                // Stop polling after max attempts
-                if (pollCount >= MAX_POLLS) {
-                    clearInterval(pollInterval);
-                    pollInterval = null;
-                    showToast('Dashboard sync complete', 'info');
-                }
-            }, 10000); // Poll every 10 seconds
-        }
-
-        // Action handlers - send to Cloudflare Worker
-        async function sendCommandToWorker(action, id, text = null) {
-            const command = buildCommand(action, id, text);
-            
-            try {
-                const response = await fetch(WORKER_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action,
-                        command,
-                        id,
-                        text
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Failed to send command');
-                }
-
-                const result = await response.json();
-                showToast(`✓ ${action.charAt(0).toUpperCase() + action.slice(1)} queued`);
-                
-                // Start polling for dashboard refresh
-                pollForUpdate();
-                
-                return result;
-            } catch (error) {
-                console.error('Worker error:', error);
-                showToast(`✗ Error: ${error.message}`, 'error');
-            }
-        }
-
-        function buildCommand(action, id, text = null) {
-            switch (action) {
-                case 'approve':
-                    return `approve [${id}]`;
-                case 'edit':
-                    return `edit [${id}]: ${text}`;
-                case 'recommend':
-                    return `recommend [${id}]: ${text}`;
-                case 'reject':
-                    return `reject [${id}]`;
-                case 'delete':
-                    return `reject [${id}]: not needed`;
-                default:
-                    return '';
-            }
-        }
-
-        async function approveAction(id) {
-            await sendCommandToWorker('approve', id);
-        }
-
-        async function editAction(id) {
-            openInputModal('edit', id, '✏️ Edit Changes');
-        }
-
-        async function recommendAction(id) {
-            openInputModal('recommend', id, '💬 Recommend Changes');
-        }
-
-        async function rejectAction(id) {
-            await sendCommandToWorker('reject', id);
-        }
-
-        async function deleteAction(id) {
-            await sendCommandToWorker('delete', id);
-        }
-
-        // Discord button
-        document.addEventListener('DOMContentLoaded', () => {
-            const discordBtn = document.getElementById('discordButton');
-            if (discordBtn) {
-                discordBtn.onclick = (e) => {
-                    e.preventDefault();
-                    window.open('#', '_blank');
-                };
-            }
-        });
-
-        // Close modal on overlay click
-        document.addEventListener('click', (e) => {
-            const overlay = document.getElementById('inputOverlay');
-            if (e.target === overlay) {
-                closeInputModal();
-            }
-        });
-
-        // Close modal on Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && document.getElementById('inputOverlay').classList.contains('show')) {
-                closeInputModal();
-            }
-        });
+        let expandedCard = null;
+        let activeEditor = null;
+        let refreshInterval = null;
 
         // Password check
         function checkPassword() {
@@ -1471,6 +724,7 @@
                 document.getElementById('passwordGate').style.display = 'none';
                 document.getElementById('dashboard').classList.add('unlocked');
                 renderDashboard();
+                startAutoRefresh();
             } else {
                 error.classList.add('show');
                 input.value = '';
@@ -1487,6 +741,8 @@
         if (sessionStorage.getItem('djAuth') === 'true') {
             document.getElementById('passwordGate').style.display = 'none';
             document.getElementById('dashboard').classList.add('unlocked');
+            renderDashboard();
+            startAutoRefresh();
         }
 
         // Format timestamp
@@ -1510,153 +766,191 @@
             });
         }
 
-        // Check if last updated is stale (5+ minutes)
-        function checkStaleUpdate() {
-            const lastUpdated = new Date(DASHBOARD_DATA.lastUpdated);
-            const now = new Date();
-            const diff = now - lastUpdated;
-            const minutes = Math.floor(diff / 60000);
-            
-            const elem = document.getElementById('lastUpdated');
-            if (minutes >= 5) {
-                elem.classList.add('stale');
-            } else {
-                elem.classList.remove('stale');
+        // Toast notifications
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // API call to Worker
+        async function sendCommand(action, id, content = null) {
+            try {
+                const response = await fetch(`${API_URL}/api/command`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action, id, content })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Command failed');
+                }
+
+                const result = await response.json();
+                return result;
+            } catch (error) {
+                console.error('API error:', error);
+                throw error;
             }
         }
 
-        // Render dashboard
-        function renderDashboard() {
-            // Last updated
-            const lastUpdatedElem = document.getElementById('lastUpdated');
-            lastUpdatedElem.textContent = `Updated ${formatTime(DASHBOARD_DATA.lastUpdated)}`;
-            checkStaleUpdate();
+        // Action handlers
+        async function handleApprove(id) {
+            const btn = document.querySelector(`[data-action="approve"][data-id="${id}"]`);
+            if (!btn || btn.disabled) return;
 
-            // Bot status
-            const statusDot = document.getElementById('botStatusDot');
-            const statusLabel = document.getElementById('botStatusLabel');
-            if (DASHBOARD_DATA.botStatus === 'active') {
-                statusDot.classList.add('active');
-                statusLabel.textContent = 'Active';
-            } else {
-                statusDot.classList.remove('active');
-                statusLabel.textContent = 'Idle';
+            try {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span> Approving...';
+                
+                await sendCommand('approve', id);
+                
+                btn.innerHTML = '✓ Posted';
+                btn.style.background = '#0d9668';
+                showToast('✓ Approval queued for bot execution');
+
+                // Disable all buttons for this item
+                disableItemButtons(id);
+
+            } catch (error) {
+                btn.disabled = false;
+                btn.innerHTML = '✅ Approve';
+                showToast('✗ Failed: ' + error.message, 'error');
             }
-
-            // Content Queue - Desktop Table
-            renderContentQueueTable();
-            
-            // Content Queue - Mobile Cards
-            renderContentQueueCards();
-
-            // Roshi Weekly
-            renderRoshiWeekly();
-
-            // Activity Log
-            renderActivityLog();
         }
 
-        function renderContentQueueTable() {
-            const container = document.getElementById('contentQueueTable');
-            
-            if (DASHBOARD_DATA.contentQueue.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📋</div>
-                        <div class="empty-state-text">No content in queue — bot will add drafts here for your review</div>
-                    </div>
-                `;
+        async function handleReject(id) {
+            const btn = document.querySelector(`[data-action="reject"][data-id="${id}"]`);
+            if (!btn || btn.disabled) return;
+
+            try {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span> Rejecting...';
+                
+                await sendCommand('reject', id);
+                
+                btn.innerHTML = '✓ Rejected';
+                showToast('✓ Rejection queued for bot execution');
+
+                // Disable all buttons for this item
+                disableItemButtons(id);
+
+            } catch (error) {
+                btn.disabled = false;
+                btn.innerHTML = '❌ Reject';
+                showToast('✗ Failed: ' + error.message, 'error');
+            }
+        }
+
+        async function handleDelete(id) {
+            const btn = document.querySelector(`[data-action="delete"][data-id="${id}"]`);
+            if (!btn || btn.disabled) return;
+
+            if (!confirm('Delete this item from the queue?')) return;
+
+            try {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span> Deleting...';
+                
+                await sendCommand('delete', id);
+                
+                btn.innerHTML = '✓ Deleted';
+                showToast('✓ Deletion queued for bot execution');
+
+                // Disable all buttons for this item
+                disableItemButtons(id);
+
+            } catch (error) {
+                btn.disabled = false;
+                btn.innerHTML = '🗑️ Delete';
+                showToast('✗ Failed: ' + error.message, 'error');
+            }
+        }
+
+        function toggleEditor(id, type) {
+            const editor = document.getElementById(`editor-${id}`);
+            const btn = document.querySelector(`[data-action="${type}"][data-id="${id}"]`);
+
+            if (activeEditor === id) {
+                // Close editor
+                editor.classList.remove('show');
+                activeEditor = null;
+            } else {
+                // Close any open editor
+                if (activeEditor) {
+                    document.getElementById(`editor-${activeEditor}`)?.classList.remove('show');
+                }
+                // Open this editor
+                editor.classList.add('show');
+                editor.querySelector('textarea').focus();
+                activeEditor = id;
+            }
+        }
+
+        async function saveEdit(id, type) {
+            const textarea = document.querySelector(`#editor-${id} textarea`);
+            const saveBtn = document.querySelector(`#editor-${id} .edit-btn:not(.cancel)`);
+            const content = textarea.value.trim();
+
+            if (!content) {
+                showToast('Please enter some text', 'warning');
                 return;
             }
 
-            let html = `
-                <table class="queue-table">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Title</th>
-                            <th>Channel</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            try {
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<span class="spinner"></span> Saving...';
+                
+                await sendCommand(type, id, content);
+                
+                saveBtn.innerHTML = '✓ Saved';
+                showToast(`✓ ${type === 'edit' ? 'Edit' : 'Suggestion'} queued for bot execution`);
 
-            DASHBOARD_DATA.contentQueue.forEach((item, idx) => {
-                html += `
-                    <tr class="queue-row ${expandedQueue === idx ? 'expanded' : ''}" onclick="toggleQueuePreview(${idx})">
-                        <td><span class="type-badge">${getTypeIcon(item.type)} ${item.type}</span></td>
-                        <td>${item.title}</td>
-                        <td>${item.channel}</td>
-                        <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span></td>
-                        <td>${item.date}</td>
-                    </tr>
-                    <tr class="queue-preview-row">
-                        <td colspan="5">
-                            <div class="queue-preview ${expandedQueue === idx ? 'show' : ''}" id="preview-${idx}">
-                                ${item.preview || 'No preview available'}
-                                <div class="queue-actions">
-                                    <button class="action-btn approve" onclick="approveAction(${item.id})" title="Approve this item">✅ Approve</button>
-                                    <button class="action-btn" onclick="editAction(${item.id})" title="Suggest edits">✏️ Edit</button>
-                                    <button class="action-btn recommend" onclick="recommendAction(${item.id})" title="Recommend changes">💬 Recommend</button>
-                                    <button class="action-btn reject" onclick="rejectAction(${item.id})" title="Reject this item">❌ Reject</button>
-                                    <button class="action-btn reject" onclick="deleteAction(${item.id})" title="Delete this item">🗑️ Delete</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
+                // Close editor after 1s
+                setTimeout(() => {
+                    document.getElementById(`editor-${id}`).classList.remove('show');
+                    activeEditor = null;
+                }, 1000);
 
-            html += `
-                    </tbody>
-                </table>
-            `;
-
-            container.innerHTML = html;
+            } catch (error) {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = `Save ${type === 'edit' ? 'Edit' : 'Suggestion'}`;
+                showToast('✗ Failed: ' + error.message, 'error');
+            }
         }
 
-        function renderContentQueueCards() {
-            const container = document.getElementById('contentQueueCards');
-            
-            if (DASHBOARD_DATA.contentQueue.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📋</div>
-                        <div class="empty-state-text">No content in queue</div>
-                    </div>
-                `;
-                return;
-            }
+        function cancelEdit(id) {
+            document.getElementById(`editor-${id}`).classList.remove('show');
+            activeEditor = null;
+        }
 
-            let html = '';
-            DASHBOARD_DATA.contentQueue.forEach((item, idx) => {
-                html += `
-                    <div class="queue-card" onclick="toggleQueuePreview(${idx})">
-                        <div class="queue-card-header">
-                            <div class="queue-card-title">${item.title}</div>
-                            <span class="status-badge status-${item.status.toLowerCase()}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span>
-                        </div>
-                        <div class="queue-card-meta">
-                            <div><span class="type-badge">${getTypeIcon(item.type)} ${item.type}</span></div>
-                            <div>${item.channel} • ${item.date}</div>
-                        </div>
-                        <div class="queue-card-preview ${expandedQueue === idx ? 'show' : ''}" id="preview-mobile-${idx}">
-                            ${item.preview || 'No preview available'}
-                            <div class="queue-actions">
-                                <button class="action-btn approve" onclick="approveAction(${item.id})" title="Approve this item">✅ Approve</button>
-                                <button class="action-btn" onclick="editAction(${item.id})" title="Suggest edits">✏️ Edit</button>
-                                <button class="action-btn recommend" onclick="recommendAction(${item.id})" title="Recommend changes">💬 Recommend</button>
-                                <button class="action-btn reject" onclick="rejectAction(${item.id})" title="Reject this item">❌ Reject</button>
-                                <button class="action-btn reject" onclick="deleteAction(${item.id})" title="Delete this item">🗑️ Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+        function disableItemButtons(id) {
+            const buttons = document.querySelectorAll(`[data-id="${id}"]`);
+            buttons.forEach(btn => {
+                if (btn.tagName === 'BUTTON') {
+                    btn.disabled = true;
+                }
             });
+        }
 
-            container.innerHTML = html;
+        function toggleCard(id) {
+            const card = document.getElementById(`card-${id}`);
+            
+            if (expandedCard === id) {
+                card.classList.remove('expanded');
+                expandedCard = null;
+            } else {
+                // Close previously expanded
+                if (expandedCard) {
+                    document.getElementById(`card-${expandedCard}`)?.classList.remove('expanded');
+                }
+                card.classList.add('expanded');
+                expandedCard = id;
+            }
         }
 
         function getTypeIcon(type) {
@@ -1669,149 +963,116 @@
             return icons[type.toLowerCase()] || '📄';
         }
 
-        function toggleQueuePreview(idx) {
-            if (expandedQueue === idx) {
-                expandedQueue = null;
-            } else {
-                expandedQueue = idx;
-            }
-            renderContentQueueTable();
-            renderContentQueueCards();
-        }
-
-        function renderRoshiWeekly() {
-            const container = document.getElementById('roshiWeekly');
+        // Render dashboard
+        function renderDashboard() {
+            // Update header
+            document.getElementById('lastUpdated').textContent = `Updated ${formatTime(DASHBOARD_DATA.lastUpdated)}`;
             
-            if (!DASHBOARD_DATA.roshiWeekly || DASHBOARD_DATA.roshiWeekly.length === 0) {
+            const statusDot = document.getElementById('botStatusDot');
+            const statusLabel = document.getElementById('botStatusLabel');
+            if (DASHBOARD_DATA.botStatus === 'active') {
+                statusDot.classList.add('active');
+                statusLabel.textContent = 'Active';
+            } else {
+                statusDot.classList.remove('active');
+                statusLabel.textContent = 'Idle';
+            }
+
+            // Render content queue
+            const container = document.getElementById('contentQueue');
+            
+            if (DASHBOARD_DATA.contentQueue.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon">📅</div>
-                        <div class="empty-state-text">No Roshi schedule configured</div>
+                        <div class="empty-state-icon">📋</div>
+                        <div class="empty-state-text">No content in queue — bot will add drafts here for your review</div>
                     </div>
                 `;
                 return;
             }
 
-            let html = `
-                <div class="roshi-grid">
-                    <div class="roshi-grid-header">
-                        <div>Day</div>
-                        <div>Channel</div>
-                        <div>Status</div>
-                    </div>
-            `;
-
-            DASHBOARD_DATA.roshiWeekly.forEach((day, idx) => {
-                const isExpandable = day.status === 'posted' || day.status === 'skipped';
-                const statusClass = `roshi-status-${day.status}`;
-                
+            let html = '';
+            DASHBOARD_DATA.contentQueue.forEach(item => {
                 html += `
-                    <div class="roshi-row ${isExpandable ? 'expandable' : ''}" onclick="${isExpandable ? `toggleRoshiExpand(${idx})` : ''}">
-                        <div class="roshi-day">${day.day}</div>
-                        <div class="roshi-channel">${day.channel}</div>
-                        <div class="roshi-status ${statusClass}">${day.status.charAt(0).toUpperCase() + day.status.slice(1)}</div>
+                    <div class="queue-card ${expandedCard === item.id ? 'expanded' : ''}" id="card-${item.id}">
+                        <div class="queue-card-header" onclick="toggleCard(${item.id})">
+                            <div class="queue-card-left">
+                                <div class="queue-card-id">#${item.id}</div>
+                                <div class="queue-card-title">${item.title}</div>
+                                <div class="queue-card-meta">
+                                    <span class="type-badge">${getTypeIcon(item.type)} ${item.type}</span>
+                                    <span>${item.channel}</span>
+                                    <span>${item.date}</span>
+                                </div>
+                            </div>
+                            <span class="status-badge status-${item.status.toLowerCase()}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span>
+                        </div>
+                        
+                        <div class="queue-card-content">
+                            <div class="queue-preview">${item.preview || 'No preview available'}</div>
+                            
+                            <div class="queue-actions">
+                                <button class="action-btn approve" data-action="approve" data-id="${item.id}" onclick="handleApprove(${item.id})">
+                                    ✅ Approve
+                                </button>
+                                <button class="action-btn reject" data-action="reject" data-id="${item.id}" onclick="handleReject(${item.id})">
+                                    ❌ Reject
+                                </button>
+                                <button class="action-btn" data-action="edit" data-id="${item.id}" onclick="toggleEditor(${item.id}, 'edit')">
+                                    ✏️ Edit
+                                </button>
+                                <button class="action-btn suggest" data-action="suggest" data-id="${item.id}" onclick="toggleEditor(${item.id}, 'suggest')">
+                                    💬 Suggest
+                                </button>
+                                <button class="action-btn" data-action="delete" data-id="${item.id}" onclick="handleDelete(${item.id})">
+                                    🗑️ Delete
+                                </button>
+                            </div>
+
+                            <div class="edit-editor" id="editor-${item.id}">
+                                <div class="edit-label">Enter your ${activeEditor === item.id ? 'changes' : 'suggestion'}:</div>
+                                <textarea class="edit-textarea" placeholder="Type your ${activeEditor === item.id ? 'edit instructions' : 'suggestions'} here..."></textarea>
+                                <div class="edit-buttons">
+                                    <button class="edit-btn cancel" onclick="cancelEdit(${item.id})">Cancel</button>
+                                    <button class="edit-btn" onclick="saveEdit(${item.id}, activeEditor === ${item.id} ? 'edit' : 'suggest')">Save ${activeEditor === item.id ? 'Edit' : 'Suggestion'}</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `;
-                
-                if (isExpandable && day.content) {
-                    html += `
-                        <div class="roshi-expand ${expandedRoshi === idx ? 'show' : ''}" id="roshi-expand-${idx}">
-                            <div class="roshi-expand-content">${day.content}</div>
-                        </div>
-                    `;
-                }
             });
 
-            html += `</div>`;
             container.innerHTML = html;
         }
 
-        function toggleRoshiExpand(idx) {
-            if (expandedRoshi === idx) {
-                expandedRoshi = null;
-            } else {
-                expandedRoshi = idx;
-            }
-            renderRoshiWeekly();
-        }
+        // Auto-refresh every 30 seconds
+        function startAutoRefresh() {
+            refreshInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(
+                        'https://raw.githubusercontent.com/ShobhitPurva/design-jutsu-dashboard/main/index.html',
+                        { cache: 'no-store' }
+                    );
 
-        // Activity Log
-        let currentFilter = 'all';
-
-        function renderActivityLog() {
-            const logContainer = document.getElementById('activityLog');
-            
-            if (DASHBOARD_DATA.activityLog.length === 0) {
-                logContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📊</div>
-                        <div class="empty-state-text">No activity yet</div>
-                    </div>
-                `;
-                return;
-            }
-
-            const logs = DASHBOARD_DATA.activityLog.slice(0, 50).reverse();
-            let html = '';
-            
-            logs.forEach((log, idx) => {
-                const hasDetails = log.details && log.details.trim().length > 0;
-                html += `
-                    <div class="activity-item ${currentFilter !== 'all' && currentFilter !== log.status ? 'hidden' : ''}" 
-                         data-status="${log.status}" 
-                         onclick="${hasDetails ? `toggleActivityExpand(${idx})` : ''}">
-                        <div class="activity-time">${formatTime(log.time)}</div>
-                        <div class="activity-action">${log.action}</div>
-                        <div class="activity-channel">${log.channel}</div>
-                        <div class="activity-status-dot ${log.status}"></div>
-                        ${hasDetails ? `
-                            <div class="activity-expand ${expandedActivity === idx ? 'show' : ''}" id="activity-expand-${idx}">
-                                <div class="activity-expand-content">${log.details}</div>
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-            });
-
-            logContainer.innerHTML = html;
-        }
-
-        function toggleActivityExpand(idx) {
-            if (expandedActivity === idx) {
-                expandedActivity = null;
-            } else {
-                expandedActivity = idx;
-            }
-            renderActivityLog();
-        }
-
-        function applyFilter(filter) {
-            currentFilter = filter;
-            renderActivityLog();
-
-            // Update active button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                if (btn.dataset.filter === filter) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
+                    if (response.ok) {
+                        const html = await response.text();
+                        const match = html.match(/const DASHBOARD_DATA = ({[\s\S]*?});/);
+                        
+                        if (match) {
+                            const newData = eval('(' + match[1] + ')');
+                            
+                            if (JSON.stringify(newData) !== JSON.stringify(DASHBOARD_DATA)) {
+                                Object.assign(DASHBOARD_DATA, newData);
+                                renderDashboard();
+                                console.log('✓ Dashboard refreshed');
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Auto-refresh error:', error);
                 }
-            });
+            }, 30000); // 30 seconds
         }
-
-        // Filter button handlers
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-btn')) {
-                applyFilter(e.target.dataset.filter);
-            }
-        });
-
-        // Auto-refresh
-        setInterval(() => {
-            if (document.getElementById('dashboard').classList.contains('unlocked')) {
-                checkStaleUpdate();
-            }
-        }, 30000);
 
         // Initial render
         if (sessionStorage.getItem('djAuth') === 'true') {
