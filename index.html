@@ -21,14 +21,12 @@
             --bg-card: #1e1e1e;
             --crimson: #A31621;
             --crimson-dark: #8B0000;
-            --crimson-dim: #5a0d12;
             --text-primary: #f0e6e6;
             --text-secondary: #999999;
             --text-tertiary: #666666;
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
-            --blue: #3b82f6;
             --border: #2a2424;
             --spacing: 16px;
         }
@@ -75,7 +73,6 @@
             color: var(--text-secondary);
             margin-bottom: calc(var(--spacing) * 2);
             font-size: 0.9375rem;
-            line-height: 1.5;
         }
 
         .password-input {
@@ -143,63 +140,21 @@
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
             padding: calc(var(--spacing) * 1.25) calc(var(--spacing) * 2);
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            gap: var(--spacing);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
         }
 
         .header-title {
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--crimson);
-            white-space: nowrap;
-        }
-
-        .header-center {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            text-align: center;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: calc(var(--spacing) / 2);
-            justify-content: flex-end;
-        }
-
-        .bot-status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--text-tertiary);
-            flex-shrink: 0;
-        }
-
-        .bot-status-dot.active {
-            background: var(--success);
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .bot-status-label {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
         }
 
         /* Main Container */
         .container {
             flex: 1;
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: calc(var(--spacing) * 2);
             width: 100%;
@@ -211,15 +166,11 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             margin-bottom: calc(var(--spacing) * 2);
-            overflow: hidden;
         }
 
         .section-header {
             padding: calc(var(--spacing) * 1.25) calc(var(--spacing) * 1.5);
             border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .section-title {
@@ -250,7 +201,7 @@
         }
 
         .queue-card.expanded {
-            border-color: var(--crimson-dim);
+            border-color: var(--crimson);
         }
 
         .queue-card-header {
@@ -317,9 +268,7 @@
         }
 
         .status-draft { background: var(--warning); }
-        .status-approved { background: var(--success); }
-        .status-posted { background: var(--blue); }
-        .status-rejected { background: var(--error); }
+        .status-posted { background: var(--success); }
 
         .queue-card-content {
             max-height: 0;
@@ -329,7 +278,7 @@
         }
 
         .queue-card.expanded .queue-card-content {
-            max-height: 2000px;
+            max-height: 3000px;
             padding-top: var(--spacing);
             border-top: 1px solid var(--border);
             margin-top: var(--spacing);
@@ -347,7 +296,7 @@
         /* Action Buttons */
         .queue-actions {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
             gap: 8px;
             margin-top: var(--spacing);
         }
@@ -371,15 +320,10 @@
             white-space: nowrap;
         }
 
-        .action-btn:hover:not(:disabled) {
+        .action-btn:hover {
             background: var(--bg-card);
             border-color: var(--crimson);
             transform: translateY(-1px);
-        }
-
-        .action-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
         }
 
         .action-btn.approve {
@@ -388,9 +332,8 @@
             color: #ffffff;
         }
 
-        .action-btn.approve:hover:not(:disabled) {
+        .action-btn.approve:hover {
             background: #0d9668;
-            border-color: #0d9668;
         }
 
         .action-btn.reject {
@@ -399,9 +342,8 @@
             color: #ffffff;
         }
 
-        .action-btn.reject:hover:not(:disabled) {
+        .action-btn.reject:hover {
             background: #dc2626;
-            border-color: #dc2626;
         }
 
         .action-btn.suggest {
@@ -410,9 +352,8 @@
             color: #ffffff;
         }
 
-        .action-btn.suggest:hover:not(:disabled) {
+        .action-btn.suggest:hover {
             background: #d97706;
-            border-color: #d97706;
         }
 
         /* Edit/Suggest Editor */
@@ -476,7 +417,7 @@
             min-height: 40px;
         }
 
-        .edit-btn:hover:not(:disabled) {
+        .edit-btn:hover {
             background: var(--crimson-dark);
         }
 
@@ -490,48 +431,59 @@
             background: var(--bg-card);
         }
 
-        .edit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        /* Fallback Copy Box */
+        .copy-fallback {
+            display: none;
+            margin-top: 8px;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
         }
 
-        /* Loading Spinner */
-        .spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
+        .copy-fallback.show {
+            display: block;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .copy-fallback-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .copy-fallback-text {
+            width: 100%;
+            padding: 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: monospace;
+            font-size: 0.875rem;
+            user-select: all;
         }
 
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 80px;
+            top: 20px;
             right: 20px;
             background: var(--success);
             color: #ffffff;
-            padding: 12px 16px;
-            border-radius: 6px;
+            padding: 14px 18px;
+            border-radius: 8px;
             font-size: 0.875rem;
             font-weight: 500;
             z-index: 999;
             display: none;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.3s ease-out;
-            max-width: 300px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            animation: slideInRight 0.3s ease-out;
+            max-width: 350px;
         }
 
         .toast.show {
-            display: flex;
+            display: block;
         }
 
         .toast.error {
@@ -542,21 +494,21 @@
             background: var(--warning);
         }
 
-        @keyframes slideIn {
+        @keyframes slideInRight {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateX(100px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: calc(var(--spacing) * 4) calc(var(--spacing) * 2);
+            padding: calc(var(--spacing) * 4);
             color: var(--text-tertiary);
         }
 
@@ -566,34 +518,18 @@
             opacity: 0.3;
         }
 
-        .empty-state-text {
-            font-size: 0.9375rem;
-            line-height: 1.5;
-        }
-
         /* Footer */
         .footer {
             border-top: 1px solid var(--border);
             padding: calc(var(--spacing) * 2);
             color: var(--text-tertiary);
             font-size: 0.8125rem;
-            text-align: left;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .header {
-                grid-template-columns: 1fr;
-                gap: calc(var(--spacing) / 2);
                 padding: var(--spacing);
-            }
-
-            .header-center {
-                text-align: left;
-            }
-
-            .header-right {
-                justify-content: flex-start;
             }
 
             .container {
@@ -604,22 +540,19 @@
                 grid-template-columns: 1fr;
             }
 
-            .action-btn {
-                width: 100%;
+            .toast {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Data Structure -->
     <script>
-        // Cloudflare Worker API endpoint
-        const API_URL = 'https://design-jutsu-api.your-subdomain.workers.dev';
-
         const DASHBOARD_DATA = {
-            lastUpdated: "2026-02-11T15:55:00.000Z",
-            botStatus: "idle",
-            reviewMode: true,
+            lastUpdated: "2026-02-11T16:16:00.000Z",
             contentQueue: [
                 {
                     id: 6,
@@ -665,7 +598,7 @@
     <div class="password-gate" id="passwordGate">
         <div class="password-box">
             <h1 class="password-title">Design Jutsu</h1>
-            <p class="password-subtitle">Command Center Access</p>
+            <p class="password-subtitle">Command Center</p>
             <input type="password" class="password-input" id="passwordInput" placeholder="Enter password" autocomplete="off">
             <button class="password-submit" onclick="checkPassword()">Unlock</button>
             <p class="password-error" id="passwordError">Incorrect password</p>
@@ -674,19 +607,11 @@
 
     <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
-        <!-- Header -->
         <header class="header">
             <div class="header-title">Design Jutsu — Command Center</div>
-            <div class="header-center" id="lastUpdated">Loading...</div>
-            <div class="header-right">
-                <div class="bot-status-dot" id="botStatusDot"></div>
-                <span class="bot-status-label" id="botStatusLabel">Idle</span>
-            </div>
         </header>
 
-        <!-- Main Container -->
         <div class="container">
-            <!-- Content Queue -->
             <section class="section">
                 <div class="section-header">
                     <h2 class="section-title">Content Queue</h2>
@@ -697,22 +622,17 @@
             </section>
         </div>
 
-        <!-- Footer -->
         <footer class="footer">
-            Powered by OpenClaw × Cloudflare
+            Powered by OpenClaw
         </footer>
     </div>
 
     <!-- Toast -->
-    <div class="toast" id="toast">
-        <span id="toastMessage"></span>
-    </div>
+    <div class="toast" id="toast"></div>
 
-    <!-- Scripts -->
     <script>
         let expandedCard = null;
         let activeEditor = null;
-        let refreshInterval = null;
 
         // Password check
         function checkPassword() {
@@ -724,7 +644,6 @@
                 document.getElementById('passwordGate').style.display = 'none';
                 document.getElementById('dashboard').classList.add('unlocked');
                 renderDashboard();
-                startAutoRefresh();
             } else {
                 error.classList.add('show');
                 input.value = '';
@@ -732,168 +651,84 @@
             }
         }
 
-        // Enter key support
         document.getElementById('passwordInput')?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') checkPassword();
         });
 
-        // Check existing auth
         if (sessionStorage.getItem('djAuth') === 'true') {
             document.getElementById('passwordGate').style.display = 'none';
             document.getElementById('dashboard').classList.add('unlocked');
             renderDashboard();
-            startAutoRefresh();
         }
 
-        // Format timestamp
-        function formatTime(isoString) {
-            const date = new Date(isoString);
-            const now = new Date();
-            const diff = now - date;
-            const minutes = Math.floor(diff / 60000);
-            
-            if (minutes < 1) return 'Just now';
-            if (minutes < 60) return `${minutes}m ago`;
-            
-            const hours = Math.floor(minutes / 60);
-            if (hours < 24) return `${hours}h ago`;
-            
-            return date.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        // Toast notifications
+        // Toast notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').textContent = message;
+            toast.textContent = message;
             toast.className = 'toast show ' + type;
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // API call to Worker
-        async function sendCommand(action, id, content = null) {
+        // Clipboard copy with fallback
+        async function copyToClipboard(text, id, type) {
             try {
-                const response = await fetch(`${API_URL}/api/command`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ action, id, content })
-                });
+                await navigator.clipboard.writeText(text);
+                let toastType = 'success';
+                if (type === 'reject' || type === 'delete') toastType = 'error';
+                if (type === 'edit' || type === 'suggest') toastType = 'warning';
+                showToast(`Copied: ${text} — paste in Discord`, toastType);
+            } catch (err) {
+                // Clipboard API failed, show fallback
+                showFallback(text, id);
+                showToast('Copy failed — use text box below', 'warning');
+            }
+        }
 
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Command failed');
-                }
-
-                const result = await response.json();
-                return result;
-            } catch (error) {
-                console.error('API error:', error);
-                throw error;
+        function showFallback(text, id) {
+            const fallback = document.getElementById(`fallback-${id}`);
+            if (fallback) {
+                fallback.classList.add('show');
+                fallback.querySelector('.copy-fallback-text').value = text;
+                fallback.querySelector('.copy-fallback-text').select();
             }
         }
 
         // Action handlers
-        async function handleApprove(id) {
-            const btn = document.querySelector(`[data-action="approve"][data-id="${id}"]`);
-            if (!btn || btn.disabled) return;
-
-            try {
-                btn.disabled = true;
-                btn.innerHTML = '<span class="spinner"></span> Approving...';
-                
-                await sendCommand('approve', id);
-                
-                btn.innerHTML = '✓ Posted';
-                btn.style.background = '#0d9668';
-                showToast('✓ Approval queued for bot execution');
-
-                // Disable all buttons for this item
-                disableItemButtons(id);
-
-            } catch (error) {
-                btn.disabled = false;
-                btn.innerHTML = '✅ Approve';
-                showToast('✗ Failed: ' + error.message, 'error');
-            }
+        function handleApprove(id) {
+            const command = `approve ${id}`;
+            copyToClipboard(command, id, 'approve');
         }
 
-        async function handleReject(id) {
-            const btn = document.querySelector(`[data-action="reject"][data-id="${id}"]`);
-            if (!btn || btn.disabled) return;
-
-            try {
-                btn.disabled = true;
-                btn.innerHTML = '<span class="spinner"></span> Rejecting...';
-                
-                await sendCommand('reject', id);
-                
-                btn.innerHTML = '✓ Rejected';
-                showToast('✓ Rejection queued for bot execution');
-
-                // Disable all buttons for this item
-                disableItemButtons(id);
-
-            } catch (error) {
-                btn.disabled = false;
-                btn.innerHTML = '❌ Reject';
-                showToast('✗ Failed: ' + error.message, 'error');
-            }
+        function handleReject(id) {
+            const command = `reject ${id}`;
+            copyToClipboard(command, id, 'reject');
         }
 
-        async function handleDelete(id) {
-            const btn = document.querySelector(`[data-action="delete"][data-id="${id}"]`);
-            if (!btn || btn.disabled) return;
-
-            if (!confirm('Delete this item from the queue?')) return;
-
-            try {
-                btn.disabled = true;
-                btn.innerHTML = '<span class="spinner"></span> Deleting...';
-                
-                await sendCommand('delete', id);
-                
-                btn.innerHTML = '✓ Deleted';
-                showToast('✓ Deletion queued for bot execution');
-
-                // Disable all buttons for this item
-                disableItemButtons(id);
-
-            } catch (error) {
-                btn.disabled = false;
-                btn.innerHTML = '🗑️ Delete';
-                showToast('✗ Failed: ' + error.message, 'error');
-            }
+        function handleDelete(id) {
+            const command = `reject ${id}: delete this`;
+            copyToClipboard(command, id, 'delete');
         }
 
         function toggleEditor(id, type) {
-            const editor = document.getElementById(`editor-${id}`);
-            const btn = document.querySelector(`[data-action="${type}"][data-id="${id}"]`);
+            const editor = document.getElementById(`editor-${id}-${type}`);
+            if (!editor) return;
 
-            if (activeEditor === id) {
-                // Close editor
+            if (activeEditor === `${id}-${type}`) {
                 editor.classList.remove('show');
                 activeEditor = null;
             } else {
-                // Close any open editor
                 if (activeEditor) {
-                    document.getElementById(`editor-${activeEditor}`)?.classList.remove('show');
+                    const [prevId, prevType] = activeEditor.split('-');
+                    document.getElementById(`editor-${prevId}-${prevType}`)?.classList.remove('show');
                 }
-                // Open this editor
                 editor.classList.add('show');
                 editor.querySelector('textarea').focus();
-                activeEditor = id;
+                activeEditor = `${id}-${type}`;
             }
         }
 
-        async function saveEdit(id, type) {
-            const textarea = document.querySelector(`#editor-${id} textarea`);
-            const saveBtn = document.querySelector(`#editor-${id} .edit-btn:not(.cancel)`);
+        function saveEdit(id, type) {
+            const textarea = document.querySelector(`#editor-${id}-${type} textarea`);
             const content = textarea.value.trim();
 
             if (!content) {
@@ -901,40 +736,23 @@
                 return;
             }
 
-            try {
-                saveBtn.disabled = true;
-                saveBtn.innerHTML = '<span class="spinner"></span> Saving...';
-                
-                await sendCommand(type, id, content);
-                
-                saveBtn.innerHTML = '✓ Saved';
-                showToast(`✓ ${type === 'edit' ? 'Edit' : 'Suggestion'} queued for bot execution`);
+            const command = type === 'edit' 
+                ? `edit ${id}: ${content}`
+                : `recommend ${id}: ${content}`;
 
-                // Close editor after 1s
-                setTimeout(() => {
-                    document.getElementById(`editor-${id}`).classList.remove('show');
-                    activeEditor = null;
-                }, 1000);
-
-            } catch (error) {
-                saveBtn.disabled = false;
-                saveBtn.innerHTML = `Save ${type === 'edit' ? 'Edit' : 'Suggestion'}`;
-                showToast('✗ Failed: ' + error.message, 'error');
-            }
+            copyToClipboard(command, id, type);
+            
+            // Close editor after short delay
+            setTimeout(() => {
+                document.getElementById(`editor-${id}-${type}`).classList.remove('show');
+                activeEditor = null;
+                textarea.value = '';
+            }, 500);
         }
 
-        function cancelEdit(id) {
-            document.getElementById(`editor-${id}`).classList.remove('show');
+        function cancelEdit(id, type) {
+            document.getElementById(`editor-${id}-${type}`).classList.remove('show');
             activeEditor = null;
-        }
-
-        function disableItemButtons(id) {
-            const buttons = document.querySelectorAll(`[data-id="${id}"]`);
-            buttons.forEach(btn => {
-                if (btn.tagName === 'BUTTON') {
-                    btn.disabled = true;
-                }
-            });
         }
 
         function toggleCard(id) {
@@ -944,7 +762,6 @@
                 card.classList.remove('expanded');
                 expandedCard = null;
             } else {
-                // Close previously expanded
                 if (expandedCard) {
                     document.getElementById(`card-${expandedCard}`)?.classList.remove('expanded');
                 }
@@ -963,29 +780,14 @@
             return icons[type.toLowerCase()] || '📄';
         }
 
-        // Render dashboard
         function renderDashboard() {
-            // Update header
-            document.getElementById('lastUpdated').textContent = `Updated ${formatTime(DASHBOARD_DATA.lastUpdated)}`;
-            
-            const statusDot = document.getElementById('botStatusDot');
-            const statusLabel = document.getElementById('botStatusLabel');
-            if (DASHBOARD_DATA.botStatus === 'active') {
-                statusDot.classList.add('active');
-                statusLabel.textContent = 'Active';
-            } else {
-                statusDot.classList.remove('active');
-                statusLabel.textContent = 'Idle';
-            }
-
-            // Render content queue
             const container = document.getElementById('contentQueue');
             
             if (DASHBOARD_DATA.contentQueue.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">📋</div>
-                        <div class="empty-state-text">No content in queue — bot will add drafts here for your review</div>
+                        <div>No content in queue</div>
                     </div>
                 `;
                 return;
@@ -1005,36 +807,50 @@
                                     <span>${item.date}</span>
                                 </div>
                             </div>
-                            <span class="status-badge status-${item.status.toLowerCase()}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span>
+                            <span class="status-badge status-${item.status}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span>
                         </div>
                         
                         <div class="queue-card-content">
-                            <div class="queue-preview">${item.preview || 'No preview available'}</div>
+                            <div class="queue-preview">${item.preview}</div>
                             
                             <div class="queue-actions">
-                                <button class="action-btn approve" data-action="approve" data-id="${item.id}" onclick="handleApprove(${item.id})">
+                                <button class="action-btn approve" onclick="handleApprove(${item.id})">
                                     ✅ Approve
                                 </button>
-                                <button class="action-btn reject" data-action="reject" data-id="${item.id}" onclick="handleReject(${item.id})">
+                                <button class="action-btn reject" onclick="handleReject(${item.id})">
                                     ❌ Reject
                                 </button>
-                                <button class="action-btn" data-action="edit" data-id="${item.id}" onclick="toggleEditor(${item.id}, 'edit')">
+                                <button class="action-btn" onclick="toggleEditor(${item.id}, 'edit')">
                                     ✏️ Edit
                                 </button>
-                                <button class="action-btn suggest" data-action="suggest" data-id="${item.id}" onclick="toggleEditor(${item.id}, 'suggest')">
+                                <button class="action-btn suggest" onclick="toggleEditor(${item.id}, 'suggest')">
                                     💬 Suggest
                                 </button>
-                                <button class="action-btn" data-action="delete" data-id="${item.id}" onclick="handleDelete(${item.id})">
+                                <button class="action-btn" onclick="handleDelete(${item.id})">
                                     🗑️ Delete
                                 </button>
                             </div>
 
-                            <div class="edit-editor" id="editor-${item.id}">
-                                <div class="edit-label">Enter your ${activeEditor === item.id ? 'changes' : 'suggestion'}:</div>
-                                <textarea class="edit-textarea" placeholder="Type your ${activeEditor === item.id ? 'edit instructions' : 'suggestions'} here..."></textarea>
+                            <div class="copy-fallback" id="fallback-${item.id}">
+                                <div class="copy-fallback-label">Copy this command:</div>
+                                <input type="text" class="copy-fallback-text" readonly>
+                            </div>
+
+                            <div class="edit-editor" id="editor-${item.id}-edit">
+                                <div class="edit-label">Enter your edit instructions:</div>
+                                <textarea class="edit-textarea" placeholder="Type what changes you want..."></textarea>
                                 <div class="edit-buttons">
-                                    <button class="edit-btn cancel" onclick="cancelEdit(${item.id})">Cancel</button>
-                                    <button class="edit-btn" onclick="saveEdit(${item.id}, activeEditor === ${item.id} ? 'edit' : 'suggest')">Save ${activeEditor === item.id ? 'Edit' : 'Suggestion'}</button>
+                                    <button class="edit-btn cancel" onclick="cancelEdit(${item.id}, 'edit')">Cancel</button>
+                                    <button class="edit-btn" onclick="saveEdit(${item.id}, 'edit')">Copy Edit Command</button>
+                                </div>
+                            </div>
+
+                            <div class="edit-editor" id="editor-${item.id}-suggest">
+                                <div class="edit-label">Enter your suggestion:</div>
+                                <textarea class="edit-textarea" placeholder="Type your recommendation..."></textarea>
+                                <div class="edit-buttons">
+                                    <button class="edit-btn cancel" onclick="cancelEdit(${item.id}, 'suggest')">Cancel</button>
+                                    <button class="edit-btn" onclick="saveEdit(${item.id}, 'suggest')">Copy Suggest Command</button>
                                 </div>
                             </div>
                         </div>
@@ -1045,36 +861,6 @@
             container.innerHTML = html;
         }
 
-        // Auto-refresh every 30 seconds
-        function startAutoRefresh() {
-            refreshInterval = setInterval(async () => {
-                try {
-                    const response = await fetch(
-                        'https://raw.githubusercontent.com/ShobhitPurva/design-jutsu-dashboard/main/index.html',
-                        { cache: 'no-store' }
-                    );
-
-                    if (response.ok) {
-                        const html = await response.text();
-                        const match = html.match(/const DASHBOARD_DATA = ({[\s\S]*?});/);
-                        
-                        if (match) {
-                            const newData = eval('(' + match[1] + ')');
-                            
-                            if (JSON.stringify(newData) !== JSON.stringify(DASHBOARD_DATA)) {
-                                Object.assign(DASHBOARD_DATA, newData);
-                                renderDashboard();
-                                console.log('✓ Dashboard refreshed');
-                            }
-                        }
-                    }
-                } catch (error) {
-                    console.error('Auto-refresh error:', error);
-                }
-            }, 30000); // 30 seconds
-        }
-
-        // Initial render
         if (sessionStorage.getItem('djAuth') === 'true') {
             renderDashboard();
         }
