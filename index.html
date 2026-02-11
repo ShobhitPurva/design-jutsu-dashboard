@@ -961,6 +961,10 @@
 <body>
     <!-- Data Structure -->
     <script>
+        // Cloudflare Worker URL (replace with your actual worker URL)
+        const WORKER_URL = 'https://design-jutsu-worker.your-domain.workers.dev';
+        // Or use: https://your-subdomain.workers.dev
+
         const DASHBOARD_DATA = {
             lastUpdated: "2026-02-11T15:39:00.000Z",
             botStatus: "idle",
@@ -1260,23 +1264,21 @@
         let currentModalId = null;
 
         // Toast notifications
-        function showToast(message = "Command copied — paste in Discord") {
+        function showToast(message = "Command queued", type = 'success') {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
+            
+            // Update toast styling based on type
+            if (type === 'error') {
+                toast.style.background = 'var(--error)';
+            } else if (type === 'info') {
+                toast.style.background = 'var(--warning)';
+            } else {
+                toast.style.background = 'var(--success)';
+            }
+            
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        // Clipboard copy
-        async function copyToClipboard(text) {
-            try {
-                await navigator.clipboard.writeText(text);
-                showToast();
-                return true;
-            } catch (err) {
-                console.error('Failed to copy:', err);
-                return false;
-            }
         }
 
         // Input Modal
@@ -1295,29 +1297,126 @@
             currentModalId = null;
         }
 
-        function copyFromModal() {
+        async function copyFromModal() {
             const text = document.getElementById('inputModalTextarea').value.trim();
             if (!text) {
                 showToast('Please enter some text');
                 return;
             }
 
-            let command = '';
-            if (currentModalAction === 'edit') {
-                command = `edit [${currentModalId}]: ${text}`;
-            } else if (currentModalAction === 'recommend') {
-                command = `recommend [${currentModalId}]: ${text}`;
-            }
+            await sendCommandToWorker(currentModalAction, currentModalId, text);
+            closeInputModal();
+        }
 
-            if (command) {
-                copyToClipboard(command);
-                closeInputModal();
+        // Auto-refresh polling
+        let pollCount = 0;
+        const MAX_POLLS = 30; // 5 minutes max (10s × 30)
+        let pollInterval = null;
+
+        async function pollForUpdate() {
+            if (pollInterval) return; // Already polling
+
+            pollCount = 0;
+            pollInterval = setInterval(async () => {
+                pollCount++;
+
+                try {
+                    // Fetch latest data from GitHub
+                    const response = await fetch(
+                        'https://raw.githubusercontent.com/ShobhitPurva/design-jutsu-dashboard/main/index.html',
+                        { cache: 'no-store' }
+                    );
+
+                    if (response.ok) {
+                        const html = await response.text();
+                        
+                        // Extract DASHBOARD_DATA from the fetched HTML
+                        const match = html.match(/const DASHBOARD_DATA = ({[\s\S]*?});/);
+                        if (match) {
+                            const newData = eval('(' + match[1] + ')');
+                            
+                            // Check if data has changed
+                            if (JSON.stringify(newData) !== JSON.stringify(DASHBOARD_DATA)) {
+                                // Update the data
+                                Object.assign(DASHBOARD_DATA, newData);
+                                renderDashboard();
+                                showToast('✓ Dashboard updated', 'success');
+                                
+                                // Stop polling
+                                clearInterval(pollInterval);
+                                pollInterval = null;
+                                return;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Poll error:', error);
+                }
+
+                // Stop polling after max attempts
+                if (pollCount >= MAX_POLLS) {
+                    clearInterval(pollInterval);
+                    pollInterval = null;
+                    showToast('Dashboard sync complete', 'info');
+                }
+            }, 10000); // Poll every 10 seconds
+        }
+
+        // Action handlers - send to Cloudflare Worker
+        async function sendCommandToWorker(action, id, text = null) {
+            const command = buildCommand(action, id, text);
+            
+            try {
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action,
+                        command,
+                        id,
+                        text
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to send command');
+                }
+
+                const result = await response.json();
+                showToast(`✓ ${action.charAt(0).toUpperCase() + action.slice(1)} queued`);
+                
+                // Start polling for dashboard refresh
+                pollForUpdate();
+                
+                return result;
+            } catch (error) {
+                console.error('Worker error:', error);
+                showToast(`✗ Error: ${error.message}`, 'error');
             }
         }
 
-        // Action handlers
+        function buildCommand(action, id, text = null) {
+            switch (action) {
+                case 'approve':
+                    return `approve [${id}]`;
+                case 'edit':
+                    return `edit [${id}]: ${text}`;
+                case 'recommend':
+                    return `recommend [${id}]: ${text}`;
+                case 'reject':
+                    return `reject [${id}]`;
+                case 'delete':
+                    return `reject [${id}]: not needed`;
+                default:
+                    return '';
+            }
+        }
+
         async function approveAction(id) {
-            await copyToClipboard(`approve [${id}]`);
+            await sendCommandToWorker('approve', id);
         }
 
         async function editAction(id) {
@@ -1329,11 +1428,11 @@
         }
 
         async function rejectAction(id) {
-            await copyToClipboard(`reject [${id}]`);
+            await sendCommandToWorker('reject', id);
         }
 
         async function deleteAction(id) {
-            await copyToClipboard(`reject [${id}]: not needed`);
+            await sendCommandToWorker('delete', id);
         }
 
         // Discord button
