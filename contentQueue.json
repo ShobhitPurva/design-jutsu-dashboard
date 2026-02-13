@@ -1,0 +1,32 @@
+[
+  {
+    "id": "penpot-free-design-2026-02-11",
+    "name": "Penpot",
+    "description": "Open-source, browser-based design tool with unlimited workspaces, real-time collaboration, and full design freedom — completely free with no paywalls.",
+    "url": "https://penpot.app",
+    "type": "design-tool",
+    "status": "draft",
+    "addedAt": "2026-02-11T12:53:00.000Z",
+    "formattedText": "🔧 **Penpot** Open-source, browser-based design tool with unlimited workspaces, real-time collaboration, and full design freedom — completely free with no paywalls. 🔗 https://penpot.app"
+  },
+  {
+    "id": "figma-tokens-workflow-2026-02-11",
+    "name": "Figma Tokens",
+    "description": "Plugin for managing design system tokens directly in Figma. Sync colors, typography, spacing across files and export to code — bridges the gap between design and dev.",
+    "url": "https://tokens.studio/",
+    "type": "design-system",
+    "status": "draft",
+    "addedAt": "2026-02-11T12:54:00.000Z",
+    "formattedText": "🔧 Figma Tokens\n📂 Type: Design System Tool\n💰 Pricing: Free/Freemium with paid tiers\n💻 Platform: Figma Plugin\n\nWhat it does: Manage your design system tokens (colors, typography, spacing) directly in Figma and sync them across files. Export to code in multiple formats — CSS, JSON, Tailwind — so your dev team stays in sync with design decisions.\n\nBest for:\n→ Teams building consistent design systems\n→ Reducing handoff friction between design and code\n\n🔗 https://tokens.studio/"
+  },
+  {
+    "id": "lucide-icons-2026-02-13",
+    "name": "Lucide Icons",
+    "description": "Beautiful, open-source icon library with 1000+ consistent, customizable SVG icons. Free with no attribution required, actively maintained, perfect for web and UI design.",
+    "url": "https://lucide.dev",
+    "type": "icon-library",
+    "status": "draft",
+    "addedAt": "2026-02-13T10:00:00.000Z",
+    "formattedText": "🔧 **Lucide Icons** Beautiful, open-source icon library with 1000+ consistent, customizable SVG icons. Free with no attribution required, actively maintained, perfect for web and UI design. 🔗 https://lucide.dev"
+  }
+]
