@@ -1,0 +1,18 @@
+{
+  "contentQueue": [
+    {
+      "id": "dj-resource-2026-02-23",
+      "timestamp": "2026-02-23T10:00:00Z",
+      "title": "Inter Typography System",
+      "description": "Open-source typeface family optimized for computer screens with 18 styles and multilingual support.",
+      "format": "🔧 **Inter Typography System** Open-source typeface family optimized for computer screens with 18 styles and multilingual support. 🔗 https://rsms.me/inter/",
+      "category": "fonts",
+      "status": "draft",
+      "source": "Inter by Rasmus Andersson",
+      "link": "https://rsms.me/inter/",
+      "resourceType": "font",
+      "isFree": true,
+      "licenseType": "Open Font License"
+    }
+  ]
+}
