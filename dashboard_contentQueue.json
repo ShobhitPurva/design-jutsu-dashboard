@@ -13,6 +13,20 @@
       "resourceType": "font",
       "isFree": true,
       "licenseType": "Open Font License"
+    },
+    {
+      "id": "dj-resource-2026-04-02",
+      "timestamp": "2026-04-02T20:14:00Z",
+      "title": "SaaS Dashboard UI Kit",
+      "description": "Comprehensive free UI kit featuring dashboard components, forms, and system elements for building modern SaaS interfaces in Penpot.",
+      "format": "🔧 **SaaS Dashboard UI Kit** Comprehensive free UI kit featuring dashboard components, forms, and system elements for building modern SaaS interfaces in Penpot. 🔗 https://penpot.app/penpothub/libraries-templates/saas-dashboard-ui-kit",
+      "category": "ui-kit",
+      "status": "draft",
+      "source": "SaaS Design - Penpot Community",
+      "link": "https://penpot.app/penpothub/libraries-templates/saas-dashboard-ui-kit",
+      "resourceType": "ui-kit",
+      "isFree": true,
+      "licenseType": "Community License"
     }
   ]
 }
