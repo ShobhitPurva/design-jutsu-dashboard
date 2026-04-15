@@ -28,5 +28,15 @@
     "status": "draft",
     "addedAt": "2026-02-13T10:00:00.000Z",
     "formattedText": "🔧 **Lucide Icons** Beautiful, open-source icon library with 1000+ consistent, customizable SVG icons. Free with no attribution required, actively maintained, perfect for web and UI design. 🔗 https://lucide.dev"
+  },
+  {
+    "id": "glow-ui-2026-04-15",
+    "name": "Glow UI",
+    "description": "Comprehensive Figma UI kit with 3,600+ free components, one-click wireframe mode, and intuitive variable system for modern SaaS dashboards and admin interfaces.",
+    "url": "https://www.glowui.com/",
+    "type": "ui-kit",
+    "status": "draft",
+    "addedAt": "2026-04-15T19:20:00.000Z",
+    "formattedText": "🔧 **Glow UI** Comprehensive Figma UI kit with 3,600+ free components, one-click wireframe mode, and intuitive variable system for modern SaaS dashboards and admin interfaces. 🔗 https://www.glowui.com/"
   }
 ]
