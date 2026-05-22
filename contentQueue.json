@@ -38,5 +38,28 @@
     "status": "draft",
     "addedAt": "2026-04-15T19:20:00.000Z",
     "formattedText": "🔧 **Glow UI** Comprehensive Figma UI kit with 3,600+ free components, one-click wireframe mode, and intuitive variable system for modern SaaS dashboards and admin interfaces. 🔗 https://www.glowui.com/"
+  },
+  {
+    "id": "mantlr-figma-ui-kits-2026-05-15",
+    "name": "10 Best Free Figma UI Kits (Tested & Ranked 2026)",
+    "description": "Expert-curated guide to production-ready free UI kits with proper auto layout, design variables, and real-project testing. Tested in actual projects with actionable insights on what separates great kits from time-wasting ones.",
+    "url": "https://mantlr.com/blog/10-best-free-figma-ui-kits-2026",
+    "type": "article",
+    "status": "draft",
+    "addedAt": "2026-05-15T10:00:00.000Z",
+    "formattedText": "🔧 **10 Best Free Figma UI Kits (Tested & Ranked 2026)** Expert-curated guide to production-ready free UI kits with proper auto layout, design variables, and real-project testing. 🔗 https://mantlr.com/blog/10-best-free-figma-ui-kits-2026"
+  },
+  {
+    "id": "figma-design-systems-video-2026-05-22",
+    "name": "How To Work With Design Systems In Figma (Easiest Way) — 2026 Guide",
+    "description": "Complete walkthrough of design systems in Figma — components, variants, workflows, and best practices. Covers setup patterns, component organization, and real-world team workflows.",
+    "url": "https://www.youtube.com/watch?v=HGWXLo-qiaE",
+    "type": "video",
+    "category": "Videos & Talks",
+    "status": "draft",
+    "addedAt": "2026-05-22T10:00:00.000Z",
+    "formattedText": "🎬 How To Work With Design Systems In Figma (Easiest Way)\n\n🎤 Creator: Design expert tutorial\n⏱️ Length: Full guide\n\nWhat you'll learn: Complete walkthrough of design systems in Figma — components, variants, workflows, and best practices for 2026. Covers everything from setup to scaling systems across teams.\n\nBest moment:\n→ System setup patterns\n→ Component organization\n→ Real-world workflow\n\n🔗 Watch: https://www.youtube.com/watch?v=HGWXLo-qiaE",
+    "qualityScore": 8.2,
+    "qualityNotes": "Current 2026 guide, high utility for design systems knowledge, Figma-focused, designer-to-designer format"
   }
 ]
