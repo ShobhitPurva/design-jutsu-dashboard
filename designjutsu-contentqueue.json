@@ -1,0 +1,17 @@
+{
+  "contentQueue": [
+    {
+      "id": "resource-20260525-001",
+      "title": "shadcn/ui Figma Library",
+      "description": "🔧 **shadcn/ui Figma Library** A community-ready Figma UI kit inspired by shadcn/ui with flexible component structure, TailwindCSS-based variables, and developer-friendly interfaces for modern web app design. 🔗 https://www.figma.com/community/file/1620094992751607601/shadcn-ui-figma-library-ui-kit-components-design-system-2026",
+      "status": "draft",
+      "type": "ui-kit",
+      "category": "figma-templates",
+      "createdAt": "2026-05-25T19:25:00Z",
+      "createdBy": "design-jutsu-bot",
+      "source": "figma-community",
+      "verified": true,
+      "notes": "Recent 2026 release, TailwindCSS-integrated, excellent for React/Next.js workflows, proper auto-layout throughout"
+    }
+  ]
+}
