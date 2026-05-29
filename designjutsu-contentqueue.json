@@ -1,6 +1,19 @@
 {
   "contentQueue": [
     {
+      "id": "resource-20260529-001",
+      "title": "Plus UI",
+      "description": "🔧 **Plus UI** Free Figma design system with 35+ components, Tailwind CSS, Auto Layout 5.0, Figma Variables, dark mode support, and code parity for React, Vue, Angular, Svelte, and Web Components. 🔗 https://www.figma.com/community/file/1310670219738074447/plus-ui-free-figma-ui-kit-and-design-system-2026-v2-0",
+      "status": "draft",
+      "type": "ui-kit",
+      "category": "figma-design-system",
+      "createdAt": "2026-05-29T20:39:00Z",
+      "createdBy": "design-jutsu-bot",
+      "source": "figma-community",
+      "verified": true,
+      "notes": "2026 v2.0 release, production-ready design system with extensive component library, dark mode included, excellent for SaaS, web apps, dashboards, landing pages, and e-commerce projects"
+    },
+    {
       "id": "resource-20260527-002",
       "title": "Aceternity UI",
       "description": "🔧 **Aceternity UI** Modern, animation-forward React components library with pre-built interactive elements like animated cards, spotlight effects, and moving borders designed for contemporary web products. 🔗 https://ui.aceternity.com",
