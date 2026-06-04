@@ -1,6 +1,19 @@
 {
   "contentQueue": [
     {
+      "id": "resource-20260604-001",
+      "title": "Material Design 3 Design Kit",
+      "description": "🔧 **Material Design 3 Design Kit** Official Google Figma design system featuring comprehensive Material 3 components, dynamic color theming, styles, and tokens for building modern interfaces aligned with Google's latest design standards. 🔗 https://www.figma.com/community/file/1035203688168086460/material-3-design-kit",
+      "status": "draft",
+      "type": "design-system",
+      "category": "figma-design-system",
+      "createdAt": "2026-06-04T09:37:00Z",
+      "createdBy": "design-jutsu-bot",
+      "source": "figma-community",
+      "verified": true,
+      "notes": "Official Google Material Design 3 Kit, comprehensive design system with full component library, dynamic color support, available in Figma Community, ideal for mobile and web applications following Material Design 3 standards"
+    },
+    {
       "id": "resource-20260529-001",
       "title": "Plus UI",
       "description": "🔧 **Plus UI** Free Figma design system with 35+ components, Tailwind CSS, Auto Layout 5.0, Figma Variables, dark mode support, and code parity for React, Vue, Angular, Svelte, and Web Components. 🔗 https://www.figma.com/community/file/1310670219738074447/plus-ui-free-figma-ui-kit-and-design-system-2026-v2-0",
