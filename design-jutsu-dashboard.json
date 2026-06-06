@@ -1,0 +1,33 @@
+{
+  "contentQueue": [
+    {
+      "id": "dj-untitled-ui-20260606",
+      "title": "Untitled UI",
+      "description": "A comprehensive free Figma UI kit with 1,000+ components, dark mode support, and fully tokenized typography and color systems for production-ready SaaS design.",
+      "link": "https://www.figma.com/community/file/1401648643325422459",
+      "type": "UI Kit",
+      "status": "draft",
+      "category": "figma",
+      "dateAdded": "2026-06-06T18:23:00Z",
+      "source": "Line25 — Free Figma Templates and UI Kits 2026",
+      "sourceUrl": "https://line25.com/articles/free-figma-templates-ui-kits-2026/",
+      "notes": "Untitled UI earned reputation as community standard with 50,000+ duplicates. Over 1,000 components across 120+ categories including forms, navigation, data display, feedback, and overlays. Variables support + light/dark mode. Recommended for SaaS products and dashboards."
+    }
+  ],
+  "activityLog": [
+    {
+      "timestamp": "2026-06-06T18:23:00Z",
+      "action": "resource-draft-created",
+      "resourceId": "dj-untitled-ui-20260606",
+      "resourceTitle": "Untitled UI",
+      "details": "New high-quality free design resource added to contentQueue with draft status",
+      "source": "Design Jutsu cron job",
+      "actor": "auto"
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2026-06-06T18:23:00Z",
+    "resourceCount": 1,
+    "draftCount": 1
+  }
+}
