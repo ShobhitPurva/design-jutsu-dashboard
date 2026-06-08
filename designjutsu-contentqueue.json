@@ -1,6 +1,19 @@
 {
   "contentQueue": [
     {
+      "id": "resource-20260608-001",
+      "title": "Penpot",
+      "description": "🔧 **Penpot** Free, open-source design and prototyping platform with real-time collaboration, native CSS layouts, design tokens, and developer-friendly features as a powerful alternative to Figma. 🔗 https://penpot.app",
+      "status": "draft",
+      "type": "design-tool",
+      "category": "design-platform",
+      "createdAt": "2026-06-08T20:31:00Z",
+      "createdBy": "design-jutsu-bot",
+      "source": "github-official",
+      "verified": true,
+      "notes": "Open-source MPL-2.0 licensed design platform, self-hostable, full collaboration support, native CSS layout integration, design tokens for theme management, active 2026 development, excellent for teams valuing data ownership and open standards"
+    },
+    {
       "id": "resource-20260604-001",
       "title": "Material Design 3 Design Kit",
       "description": "🔧 **Material Design 3 Design Kit** Official Google Figma design system featuring comprehensive Material 3 components, dynamic color theming, styles, and tokens for building modern interfaces aligned with Google's latest design standards. 🔗 https://www.figma.com/community/file/1035203688168086460/material-3-design-kit",

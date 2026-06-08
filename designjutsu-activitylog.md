@@ -1,5 +1,18 @@
 # Design Jutsu Activity Log
 
+## 2026-06-08
+
+**20:31 UTC** | Resource Discovery: Penpot
+- **Task:** Design Jutsu Resource Auto-Post (cron: ae5470eb-3853-48ad-9a11-b63f4d1f4572)
+- **Action:** Generated new resource draft
+- **Resource:** Penpot (https://penpot.app)
+- **Details:** Free, open-source design and prototyping platform with real-time collaboration, native CSS layouts, design tokens, and developer-friendly features. Active 2026 development, self-hostable, MPL-2.0 licensed. Excellent for teams valuing data ownership and open standards.
+- **Status:** Added to contentQueue as draft
+- **Verification:** Free resource, open-source on GitHub, no duplicates, meets all criteria
+- **Next:** Awaiting review and GitHub push
+
+---
+
 ## 2026-06-04
 
 **09:37 UTC** | Resource Discovery: Material Design 3 Design Kit
